@@ -1,13 +1,24 @@
 <template>
   <div class="w-full h-screen flex items-center justify-center bg-white">
-    <button class="button">
+    <button @click="handleGotoTest" class="button">
       <span>Got to Test</span>
     </button>
   </div>
 </template>
 
 <script>
-export default {};
+import { useRouter } from "vue-router";
+export default {
+  setup() {
+    const router = useRouter();
+    const handleGotoTest = () => {
+      router.push({ name: "homeweb" });
+    };
+    return {
+      handleGotoTest,
+    };
+  },
+};
 </script>
 
 <style>
