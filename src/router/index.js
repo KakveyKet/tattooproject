@@ -1,22 +1,64 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import DashoardVue from '@/views/Dashoard.vue'
+import AdminDashboard from '../views/AdminDashboard.vue';
 
+
+import ProductVue from '@/views/Product.vue';
+import ArtistVue from '@/views/Artist.vue';
+import BookingVue from '@/views/Booking.vue';
+
+import HomeWebVue from '@/client/HomeWeb.vue';
+
+import UserTestVue from '@/client/UserTest.vue';
 const routes = [
   {
+
     path: '/',
-    name: 'home',
-    component: HomeView
+    name: 'usertest',
+    component: UserTestVue,
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    path: '/webclient',
+    name: 'home',
+    component: HomeView,
+    children: [
+      {
+        path: '/homeweb',
+        name: 'homeweb',
+        component: HomeWebVue
+      }
+    ]
+  },
+  {
+    path: '/dashboard',
+    name: 'dashboard',
+    component: DashoardVue,
+    children: [
+      {
+        path: "/admin",
+        name: 'admin',
+        component: AdminDashboard
+      },
+      {
+        path: '/products',
+        name: 'products',
+        component: ProductVue
+      },
+      {
+        path: '/artist',
+        name: 'artist',
+        component: ArtistVue
+      },
+      {
+        path: '/booking',
+        name: 'booking',
+        component: BookingVue
+      }
+    ]
   }
-]
 
+]
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
