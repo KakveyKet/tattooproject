@@ -12,6 +12,8 @@ import HomeWebVue from '@/client/HomeWeb.vue';
 
 import UserTestVue from '@/client/UserTest.vue';
 import ServiceAndProductVue from '@/client/ServiceAndProduct.vue';
+import ContactUsVue from '@/client/ContactUs.vue';
+import AboutUs from '@/client/AboutUs.vue';
 const routes = [
   {
 
@@ -33,6 +35,16 @@ const routes = [
         path: '/productandservice',
         name: 'productandservice',
         component: ServiceAndProductVue
+      },
+      {
+        path: '/contactus',
+        name: 'contactus',
+        component: ContactUsVue
+      },
+      {
+        path: '/aboutus',
+        name: 'aboutus',
+        component: AboutUs
       }
     ]
   },

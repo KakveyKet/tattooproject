@@ -1,7 +1,9 @@
 <template>
   <div class="p-5 w-full h-full bg-isGray relative">
     <!-- seach -->
-    <div class="w-full flex justify-end fixed right-2 z-20 top-16">
+    <div
+      class="w-full bg-isGray flex justify-end fixed right-2 z-20 top-[60px] p-1"
+    >
       <div
         class="lg:w-[20%] md:w-[30%] xl:w-[25%] w-[60%] h-10 relative bg-white rounded-3xl flex items-center justify-between"
       >
@@ -41,200 +43,140 @@
         All Products
       </h1>
     </div>
-    <div class="w-full h-screen">
-      <div class="w-full h-full grid grid-cols-2 gap-1">
-        <div class="w-full h-full over">
-          <div
-            class="bg-[url('https://i.pinimg.com/564x/eb/99/ea/eb99eade0c71bcb977e2abd9b47f243b.jpg')] bg-cover w-full h-[200px] relative"
-          >
-            <button
-              class="absolute group top-0 right-0 duration-300 focus:bg-slate-900 focus:bg-opacity-70 w-full h-full flex flex-col items-center justify-center"
+    <div
+      class="w-full h-auto grid grid-cols-2 lg:grid-cols-6 xl:grid-cols-6 md:grid-cols-5 lg:gap-3 xl:gap-3 gap-1"
+    >
+      <div
+        class="bg-[url('https://i.pinimg.com/736x/55/cf/f7/55cff7168c5445ad51f30c5b7c55b18d.jpg')] bg-cover w-[90%] xl:w-[300px] h-[200px] lg:h-96 relative m-2"
+      >
+        <button
+          class="absolute group top-0 right-0 duration-300 focus:bg-slate-900 focus:bg-opacity-70 w-full h-full flex flex-col items-center justify-center"
+        >
+          <div>
+            <h1
+              class="text-[18px] font-bold group-focus:text-green-400 text-transparent py-2"
             >
-              <div>
-                <h1
-                  class="text-[18px] font-bold group-focus:text-green-400 text-transparent py-2"
-                >
-                  Small tattoo
-                </h1>
-              </div>
-              <div class="w-[70%] h-[90%]">
-                <p
-                  class="text-transparent text-[12px] inline-block group-focus:text-white font-semibold"
-                >
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                </p>
-              </div>
-            </button>
+              Small tattoo
+            </h1>
           </div>
-        </div>
-        <div class="w-full h-full">
-          <div
-            class="bg-[url('https://i.pinimg.com/564x/6c/e4/6d/6ce46d620eafaa7e8529686e5ac157a1.jpg')] bg-cover w-full h-full relative"
-          >
-            <button
-              class="absolute group top-0 right-0 duration-300 focus:bg-slate-900 focus:bg-opacity-70 w-full h-full flex flex-col items-center justify-center"
+          <div class="w-[70%] h-[90%]">
+            <p
+              class="text-transparent text-[12px] inline-block group-focus:text-white font-semibold"
             >
-              <div>
-                <h1
-                  class="text-[18px] font-bold group-focus:text-green-400 text-transparent py-2"
-                >
-                  Small tattoo
-                </h1>
-              </div>
-              <div class="w-[70%] h-[90%]">
-                <p
-                  class="text-transparent text-[12px] inline-block group-focus:text-white font-semibold"
-                >
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                </p>
-              </div>
-            </button>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            </p>
           </div>
-        </div>
-        <div class="w-full h-full">
-          <div
-            class="bg-[url('https://i.pinimg.com/736x/55/cf/f7/55cff7168c5445ad51f30c5b7c55b18d.jpg')] bg-cover w-full h-full relative"
-          >
-            <button
-              class="absolute group top-0 right-0 duration-300 focus:bg-slate-900 focus:bg-opacity-70 w-full h-full flex flex-col items-center justify-center"
+        </button>
+      </div>
+      <div
+        class="bg-[url('https://i.pinimg.com/564x/5a/06/90/5a0690b3c5d1e235a962324d6a23db79.jpg')] bg-cover w-[90%] xl:w-[300px] h-[200px] lg:h-96 relative m-2"
+      >
+        <button
+          class="absolute group top-0 right-0 duration-300 focus:bg-slate-900 focus:bg-opacity-70 w-full h-full flex flex-col items-center justify-center"
+        >
+          <div>
+            <h1
+              class="text-[18px] font-bold group-focus:text-green-400 text-transparent py-2"
             >
-              <div>
-                <h1
-                  class="text-[18px] font-bold group-focus:text-green-400 text-transparent py-2"
-                >
-                  Small tattoo
-                </h1>
-              </div>
-              <div class="w-[70%] h-[90%]">
-                <p
-                  class="text-transparent text-[12px] inline-block group-focus:text-white font-semibold"
-                >
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                </p>
-              </div>
-            </button>
+              Small tattoo
+            </h1>
           </div>
-        </div>
-        <div class="w-full h-full">
-          <div
-            class="bg-[url('https://i.pinimg.com/736x/55/cf/f7/55cff7168c5445ad51f30c5b7c55b18d.jpg')] bg-cover w-full h-full relative"
-          >
-            <button
-              class="absolute group top-0 right-0 duration-300 focus:bg-slate-900 focus:bg-opacity-70 w-full h-full flex flex-col items-center justify-center"
+          <div class="w-[70%] h-[90%]">
+            <p
+              class="text-transparent text-[12px] inline-block group-focus:text-white font-semibold"
             >
-              <div>
-                <h1
-                  class="text-[18px] font-bold group-focus:text-green-400 text-transparent py-2"
-                >
-                  Small tattoo
-                </h1>
-              </div>
-              <div class="w-[70%] h-[90%]">
-                <p
-                  class="text-transparent text-[12px] inline-block group-focus:text-white font-semibold"
-                >
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                </p>
-              </div>
-            </button>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            </p>
           </div>
-        </div>
-        <div class="w-full h-full">
-          <div
-            class="bg-[url('https://i.pinimg.com/564x/eb/99/ea/eb99eade0c71bcb977e2abd9b47f243b.jpg')] bg-cover w-full h-[200px] relative"
-          >
-            <button
-              class="absolute group top-0 right-0 duration-300 focus:bg-slate-900 focus:bg-opacity-70 w-full h-full flex flex-col items-center justify-center"
+        </button>
+      </div>
+      <div
+        class="bg-[url('https://i.pinimg.com/564x/f3/38/c5/f338c5cd371671da1ee47dcf9aecdcf0.jpg')] bg-cover w-[90%] xl:w-[300px] h-[200px] lg:h-96 relative m-2"
+      >
+        <button
+          class="absolute group top-0 right-0 duration-300 focus:bg-slate-900 focus:bg-opacity-70 w-full h-full flex flex-col items-center justify-center"
+        >
+          <div>
+            <h1
+              class="text-[18px] font-bold group-focus:text-green-400 text-transparent py-2"
             >
-              <div>
-                <h1
-                  class="text-[18px] font-bold group-focus:text-green-400 text-transparent py-2"
-                >
-                  Small tattoo
-                </h1>
-              </div>
-              <div class="w-[70%] h-[90%]">
-                <p
-                  class="text-transparent text-[12px] inline-block group-focus:text-white font-semibold"
-                >
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                </p>
-              </div>
-            </button>
+              Small tattoo
+            </h1>
           </div>
-        </div>
-        <div class="w-full h-full">
-          <div
-            class="bg-[url('https://i.pinimg.com/564x/6c/e4/6d/6ce46d620eafaa7e8529686e5ac157a1.jpg')] bg-cover w-full h-full relative"
-          >
-            <button
-              class="absolute group top-0 right-0 duration-300 focus:bg-slate-900 focus:bg-opacity-70 w-full h-full flex flex-col items-center justify-center"
+          <div class="w-[70%] h-[90%]">
+            <p
+              class="text-transparent text-[12px] inline-block group-focus:text-white font-semibold"
             >
-              <div>
-                <h1
-                  class="text-[18px] font-bold group-focus:text-green-400 text-transparent py-2"
-                >
-                  Small tattoo
-                </h1>
-              </div>
-              <div class="w-[70%] h-[90%]">
-                <p
-                  class="text-transparent text-[12px] inline-block group-focus:text-white font-semibold"
-                >
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                </p>
-              </div>
-            </button>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            </p>
           </div>
-        </div>
-        <div class="w-full h-full">
-          <div
-            class="bg-[url('https://i.pinimg.com/736x/55/cf/f7/55cff7168c5445ad51f30c5b7c55b18d.jpg')] bg-cover w-full h-full relative"
-          >
-            <button
-              class="absolute group top-0 right-0 duration-300 focus:bg-slate-900 focus:bg-opacity-70 w-full h-full flex flex-col items-center justify-center"
+        </button>
+      </div>
+      <div
+        class="bg-[url('https://i.pinimg.com/736x/b4/ef/1f/b4ef1f7b73c48480b6e5cb3c6c389e15.jpg')] bg-cover w-[90%] xl:w-[300px] h-[200px] lg:h-96 relative m-2"
+      >
+        <button
+          class="absolute group top-0 right-0 duration-300 focus:bg-slate-900 focus:bg-opacity-70 w-full h-full flex flex-col items-center justify-center"
+        >
+          <div>
+            <h1
+              class="text-[18px] font-bold group-focus:text-green-400 text-transparent py-2"
             >
-              <div>
-                <h1
-                  class="text-[18px] font-bold group-focus:text-green-400 text-transparent py-2"
-                >
-                  Small tattoo
-                </h1>
-              </div>
-              <div class="w-[70%] h-[90%]">
-                <p
-                  class="text-transparent text-[12px] inline-block group-focus:text-white font-semibold"
-                >
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                </p>
-              </div>
-            </button>
+              Small tattoo
+            </h1>
           </div>
-        </div>
-        <div class="w-full h-full">
-          <div
-            class="bg-[url('https://i.pinimg.com/736x/55/cf/f7/55cff7168c5445ad51f30c5b7c55b18d.jpg')] bg-cover w-full h-full relative"
-          >
-            <button
-              class="absolute group top-0 right-0 duration-300 focus:bg-slate-900 focus:bg-opacity-70 w-full h-full flex flex-col items-center justify-center"
+          <div class="w-[70%] h-[90%]">
+            <p
+              class="text-transparent text-[12px] inline-block group-focus:text-white font-semibold"
             >
-              <div>
-                <h1
-                  class="text-[18px] font-bold group-focus:text-green-400 text-transparent py-2"
-                >
-                  Small tattoo
-                </h1>
-              </div>
-              <div class="w-[70%] h-[90%]">
-                <p
-                  class="text-transparent text-[12px] inline-block group-focus:text-white font-semibold"
-                >
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                </p>
-              </div>
-            </button>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            </p>
           </div>
-        </div>
+        </button>
+      </div>
+      <div
+        class="bg-[url('https://i.pinimg.com/564x/17/b1/0f/17b10f5d693f5f6039fdaa3284bd52b1.jpg')] bg-cover w-[90%] xl:w-[300px] h-[200px] lg:h-96 relative m-2"
+      >
+        <button
+          class="absolute group top-0 right-0 duration-300 focus:bg-slate-900 focus:bg-opacity-70 w-full h-full flex flex-col items-center justify-center"
+        >
+          <div>
+            <h1
+              class="text-[18px] font-bold group-focus:text-green-400 text-transparent py-2"
+            >
+              Small tattoo
+            </h1>
+          </div>
+          <div class="w-[70%] h-[90%]">
+            <p
+              class="text-transparent text-[12px] inline-block group-focus:text-white font-semibold"
+            >
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            </p>
+          </div>
+        </button>
+      </div>
+      <div
+        class="bg-[url('https://i.pinimg.com/564x/5b/97/39/5b97395c7edb0e70406ac9e031a29692.jpg')] bg-cover w-[90%] xl:w-[300px] h-[200px] lg:h-96 relative m-2"
+      >
+        <button
+          class="absolute group top-0 right-0 duration-300 focus:bg-slate-900 focus:bg-opacity-70 w-full h-full flex flex-col items-center justify-center"
+        >
+          <div>
+            <h1
+              class="text-[18px] font-bold group-focus:text-green-400 text-transparent py-2"
+            >
+              Small tattoo
+            </h1>
+          </div>
+          <div class="w-[70%] h-[90%]">
+            <p
+              class="text-transparent text-[12px] inline-block group-focus:text-white font-semibold"
+            >
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            </p>
+          </div>
+        </button>
       </div>
     </div>
 

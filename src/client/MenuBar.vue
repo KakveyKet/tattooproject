@@ -28,12 +28,12 @@
       >
       <div class="w-[2px] h-4 bg-white"></div>
 
-      <router-link class="text-lg font-semibold text-white" to="/Home"
+      <router-link class="text-lg font-semibold text-white" to="/contactus"
         >Contact us</router-link
       >
       <div class="w-[2px] h-4 bg-white"></div>
 
-      <router-link class="text-lg font-semibold text-white" to="/Home"
+      <router-link class="text-lg font-semibold text-white" to="/aboutus"
         >About US</router-link
       >
       <div class="w-[2px] h-4 bg-white"></div>
@@ -142,10 +142,16 @@
               to="/productandservice"
               >Product & Service</router-link
             >
-            <router-link class="text-xl font-semibold text-white" to="/Home"
+            <router-link
+              @click.prevent="handleOpenMenuMobile"
+              class="text-xl font-semibold text-white"
+              to="/contactus"
               >Contact us</router-link
             >
-            <router-link class="text-xl font-semibold text-white" to="/Home"
+            <router-link
+              @click.prevent="handleOpenMenuMobile"
+              class="text-xl font-semibold text-white"
+              to="/aboutus"
               >About US</router-link
             >
             <router-link class="text-xl font-semibold text-white" to="/Home"
