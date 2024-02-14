@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-isGray scrollbar-hide">
+  <div class="bg-isGray scrollbar-hide lg:hidden xl:hidden block">
     <div>
       <h1 class="text-center py-2 text-white text-2xl font-semibold">
         Meet our Artist

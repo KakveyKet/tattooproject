@@ -2,6 +2,7 @@
   <div
     class="w-full h-[60px] bg-[#2B2B2D] lg:flex xl:flex md:hidden hidden items-center justify-between shadow-md"
   >
+    <!-- lg xl md -->
     <div class="flex items-center space-x-3">
       <div>
         <div>
@@ -20,7 +21,9 @@
         >Home</router-link
       >
       <div class="w-[2px] h-4 bg-white"></div>
-      <router-link class="text-lg font-semibold text-white" to="/Home"
+      <router-link
+        class="text-lg font-semibold text-white"
+        to="/productandservice"
         >Product & Service</router-link
       >
       <div class="w-[2px] h-4 bg-white"></div>
@@ -57,6 +60,7 @@
       </div>
     </div>
   </div>
+  <!-- sm -->
   <div
     class="w-full p-2 h-[60px] bg-[#2B2B2D] flex lg:hidden xl:hidden md:hidden items-center justify-between shadow-md relative"
   >
@@ -125,10 +129,16 @@
     >
       <div class="w-full flex flex-col h-screen bg-[#2B2B2D] p-4">
         <ul class="flex w-[70%] h-1/2 mt-10 flex-col ml-12 space-y-4">
-          <router-link class="text-xl font-semibold text-white" to="/Home"
+          <router-link
+            @click.prevent="handleOpenMenuMobile"
+            class="text-xl font-semibold text-white"
+            to="/homeweb"
             >Home</router-link
           >
-          <router-link class="text-xl font-semibold text-white" to="/Home"
+          <router-link
+            @click.prevent="handleOpenMenuMobile"
+            class="text-xl font-semibold text-white"
+            to="/productandservice"
             >Product & Service</router-link
           >
           <router-link class="text-xl font-semibold text-white" to="/Home"
@@ -147,9 +157,16 @@
 </template>
 
 <script>
-import { ref } from "vue";
+// TW Elements is free under AGPL, with commercial license required for specific uses. See more details: https://tw-elements.com/license/ and contact us for queries at tailwind@mdbootstrap.com
+// Initialization for ES Users
+import { Animate, initTE } from "tw-elements";
+
+import { ref, onMounted } from "vue";
 export default {
   setup() {
+    onMounted(() => {
+      initTE({ Animate });
+    });
     const isOpenMenuMobile = ref(true);
     const handleOpenMenuMobile = () => {
       isOpenMenuMobile.value = !isOpenMenuMobile.value;
@@ -158,3 +175,10 @@ export default {
   },
 };
 </script>
+
+<style>
+.router-link-active {
+  border-bottom: 2px red solid;
+  display: inline-block;
+}
+</style>

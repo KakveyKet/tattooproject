@@ -11,6 +11,7 @@ import BookingVue from '@/views/Booking.vue';
 import HomeWebVue from '@/client/HomeWeb.vue';
 
 import UserTestVue from '@/client/UserTest.vue';
+import ServiceAndProductVue from '@/client/ServiceAndProduct.vue';
 const routes = [
   {
 
@@ -27,6 +28,11 @@ const routes = [
         path: '/homeweb',
         name: 'homeweb',
         component: HomeWebVue
+      },
+      {
+        path: '/productandservice',
+        name: 'productandservice',
+        component: ServiceAndProductVue
       }
     ]
   },

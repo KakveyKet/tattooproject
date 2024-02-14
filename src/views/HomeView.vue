@@ -1,6 +1,7 @@
 <template>
-  <div>
+  <div class="w-ful h-auto">
     <MenuBar />
+
     <router-view />
     <FooterVue />
   </div>

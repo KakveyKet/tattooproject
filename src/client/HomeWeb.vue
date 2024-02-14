@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full">
+  <div class="w-full h-auto bg-isGray">
     <div class="content w-full bg-opacity-50 h-[250px]">
       <div
         class="w-full h-full flex flex-col justify-center items-center bg-black bg-opacity-50 p-3"
