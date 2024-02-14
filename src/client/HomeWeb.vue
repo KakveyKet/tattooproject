@@ -26,11 +26,23 @@
         </div>
       </div>
     </div>
+    <div>
+      <ProductPage />
+    </div>
+    <div>
+      <ArtistPageVue />
+    </div>
   </div>
 </template>
 
 <script>
+import ArtistPageVue from "./ArtistPage.vue";
+import ProductPage from "./ProductPage.vue";
 export default {
+  components: {
+    ProductPage,
+    ArtistPageVue,
+  },
   setup() {
     return {};
   },
