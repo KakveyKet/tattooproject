@@ -12,6 +12,7 @@
               type="text"
               name="email"
               required
+              autofocus
               placeholder="First Name *"
               class="border-2 border-white bg-transparent px-4 py-2 text-white leading-10 rounded-md outline-none"
             />
@@ -59,19 +60,7 @@
         </div>
         <!-- 3 -->
         <div class="mt-2">
-          <!-- TW Elements is free under AGPL, with commercial license required for specific uses. See more details: https://tw-elements.com/license/ and contact us for queries at tailwind@mdbootstrap.com -->
-          <div
-            class="relative mb-3"
-            data-te-datepicker-init
-            data-te-format="dd, mmm, yyyy"
-            data-te-input-wrapper-init
-          >
-            <input
-              type="text"
-              class="peer block min-h-[auto] w-full rounded border-2 border-white bg-transparent px-4 py-4 leading-[1.6] outline-none transition-all duration-200 ease-linear data-[te-input-state-active]:placeholder:opacity-100 text-white motion-reduce:transition-none [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-              placeholder="Choose date and time *"
-            />
-          </div>
+          <ejs-datetimepicker placeholder="សូមជ្រើសរើស"> </ejs-datetimepicker>
         </div>
         <!-- 4 -->
         <div class="mt-2">
@@ -182,16 +171,11 @@
               >
                 <span>Photo Preferred</span>
               </p>
-              <input id="hidden-input" type="file" multiple class="hidden" />
-              <button
-                id="button"
-                class="mt-2 rounded-sm px-3 py-1 bg-gray-200 hover:bg-gray-300 focus:shadow-outline focus:outline-none"
-              >
-                Upload a file
-              </button>
+              <input id="hidden-input" type="file" />
             </header>
           </section>
         </div>
+
         <div class="mt-4 flex">
           <button
             type="submit"
@@ -206,18 +190,11 @@
 </template>
 
 <script>
-import { Datepicker, Input, initTE } from "tw-elements";
-
-import { onMounted } from "vue";
 export default {
   setup() {
-    onMounted(() => {
-      initTE({ Datepicker, Input });
-    });
-
     return {};
   },
 };
 </script>
 
-<style lang="sass" scoped></style>
+<style></style>

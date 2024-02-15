@@ -1,6 +1,6 @@
 <template>
   <div
-    class="h-[70px] z-50 bg-nav w-full flex items-center justify-between shadow-md"
+    class="h-[70px] fixed z-50 bg-nav w-full flex items-center justify-between shadow-md"
   >
     <div class="flex items-center space-x-3">
       <div>

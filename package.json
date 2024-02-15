@@ -7,6 +7,7 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@syncfusion/ej2-vue-calendars": "^23.1.41",
     "core-js": "^3.8.3",
     "tw-elements": "^1.1.0",
     "vue": "^3.2.13",
