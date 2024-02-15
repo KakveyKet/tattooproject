@@ -60,7 +60,9 @@
         </div>
         <!-- 3 -->
         <div class="mt-2">
-          <ejs-datetimepicker placeholder="សូមជ្រើសរើស"> </ejs-datetimepicker>
+          <div class="w-full px-2 py-3 border-white border-2 rounded-md">
+            <ejs-datetimepicker placeholder="សូមជ្រើសរើស"> </ejs-datetimepicker>
+          </div>
         </div>
         <!-- 4 -->
         <div class="mt-2">
