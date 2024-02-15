@@ -40,6 +40,7 @@
 
       <div>
         <button
+          @click.prevent="handleGotoBooking"
           class="px-2 py-1 bg-red-600 rounded active:bg-red-800 duration-300 hover:bg-red-700 text-white flex items-center space-x-2"
         >
           <svg
@@ -106,6 +107,7 @@
       </div>
       <div>
         <button
+          @click.prevent="handleGotoBooking"
           class="px-2 py-1 bg-red-600 rounded active:bg-red-800 duration-300 hover:bg-red-700 text-white flex items-center space-x-2"
         >
           <svg
@@ -154,7 +156,10 @@
               to="/aboutus"
               >About US</router-link
             >
-            <router-link class="text-xl font-semibold text-white" to="/Home"
+            <router-link
+              @click.prevent="handleOpenMenuMobile"
+              class="text-xl font-semibold text-white"
+              to="/bookingUser"
               >Booking</router-link
             >
           </ul>
@@ -168,16 +173,21 @@
 import { Animate, initTE } from "tw-elements";
 
 import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
 export default {
   setup() {
     onMounted(() => {
       initTE({ Animate });
     });
+    const router = useRouter();
     const isOpenMenuMobile = ref(true);
     const handleOpenMenuMobile = () => {
       isOpenMenuMobile.value = !isOpenMenuMobile.value;
     };
-    return { handleOpenMenuMobile, isOpenMenuMobile };
+    const handleGotoBooking = () => {
+      router.push({ name: "bookingUser" });
+    };
+    return { handleOpenMenuMobile, isOpenMenuMobile, handleGotoBooking };
   },
 };
 </script>

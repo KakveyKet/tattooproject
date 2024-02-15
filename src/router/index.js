@@ -14,6 +14,7 @@ import UserTestVue from '@/client/UserTest.vue';
 import ServiceAndProductVue from '@/client/ServiceAndProduct.vue';
 import ContactUsVue from '@/client/ContactUs.vue';
 import AboutUs from '@/client/AboutUs.vue';
+import BookingUser from '@/client/Booking.vue';
 const routes = [
   {
 
@@ -45,6 +46,11 @@ const routes = [
         path: '/aboutus',
         name: 'aboutus',
         component: AboutUs
+      },
+      {
+        path: '/bookingUser',
+        name: "bookingUser",
+        component: BookingUser
       }
     ]
   },
