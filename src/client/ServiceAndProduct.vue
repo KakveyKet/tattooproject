@@ -181,9 +181,11 @@
     </div>
 
     <!-- minose < 18 -->
-    <div class="w-full mt-3">
-      <div class="bg-red-500 flex items-center p-3 rounded-md space-x-4">
-        <div>
+    <div class="w-full lg:w-1/2 xl:h-2/3 md:w-1/2 mx-auto mt-3">
+      <div
+        class="bg-red-500 flex items-center p-3 rounded-md justify-center gap-2"
+      >
+        <div class="">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="w-20 h-20 text-white"
@@ -200,11 +202,14 @@
             />
           </svg>
         </div>
-        <div>
+        <div class="w-[80%]">
           <h1 class="text-2xl font-bold text-white text-center">Minorse</h1>
-          <p class="text-start text-white text-sm">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga alias
-            temporibus tempore!
+          <p
+            class="text-start text-white text-sm lg:text-2xl xl:text-2xl md:text-xl inline-block"
+          >
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. A, numquam
+            totam, cumque accusamus nemo laudantium possimus nesciunt quis quia,
+            hic enim voluptas ipsam recusandae quos!
           </p>
         </div>
       </div>

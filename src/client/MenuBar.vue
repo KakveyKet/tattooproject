@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-full h-[60px] bg-[#2B2B2D] lg:flex xl:flex md:hidden hidden items-center justify-between shadow-md"
+    class="w-full h-[60px] bg-[#2B2B2D] lg:flex xl:flex md:hidden hidden items-center justify-between shadow-md fixed z-50"
   >
     <!-- lg xl md -->
     <div class="flex items-center space-x-3">
@@ -165,8 +165,6 @@
 </template>
 
 <script>
-// TW Elements is free under AGPL, with commercial license required for specific uses. See more details: https://tw-elements.com/license/ and contact us for queries at tailwind@mdbootstrap.com
-// Initialization for ES Users
 import { Animate, initTE } from "tw-elements";
 
 import { ref, onMounted } from "vue";
