@@ -10,6 +10,7 @@
             class="w-[80%] px-3 h-full placeholder:text-sm bg-transparent outline-none"
             type="text"
             placeholder="Search..."
+            v-model="searchQuery"
           />
           <span class="mr-2"
             ><svg
@@ -35,8 +36,12 @@
               /></svg
           ></span>
         </div>
-        <div>
+        <div class="relative" data-te-dropdown-ref>
           <button
+            id="dropdownMenuButton1"
+            data-te-dropdown-toggle-ref
+            aria-expanded="false"
+            data-te-ripple-init
             class="px-4 h-8 shadow rounded-lg border-primary1 border-2 flex justify-start items-center"
           >
             <span
@@ -57,6 +62,60 @@
             </span>
             Filter
           </button>
+          <ul
+            class="absolute z-[1000] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-isGray [&[data-te-dropdown-show]]:block"
+            aria-labelledby="dropdownMenuButton1"
+            data-te-dropdown-menu-ref
+          >
+            <li @click="handleSort('active')">
+              <a
+                class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                href="#"
+                data-te-dropdown-item-ref
+                >Sort by Active</a
+              >
+            </li>
+            <li @click="handleSort('inactive')">
+              <a
+                class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                href="#"
+                data-te-dropdown-item-ref
+                >Sort by Inactive</a
+              >
+            </li>
+            <li @click="handleSort('Mon-Fri')">
+              <a
+                class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                href="#"
+                data-te-dropdown-item-ref
+                >Mon-Fri</a
+              >
+            </li>
+            <li @click="handleSort('Sat-Sun')">
+              <a
+                class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                href="#"
+                data-te-dropdown-item-ref
+                >Sat-Sun</a
+              >
+            </li>
+            <li @click="handleSort('Morning Section')">
+              <a
+                class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                href="#"
+                data-te-dropdown-item-ref
+                >Morning Section</a
+              >
+            </li>
+            <li @click="handleSort('Afternoon section')">
+              <a
+                class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                href="#"
+                data-te-dropdown-item-ref
+                >Afternoon-section</a
+              >
+            </li>
+          </ul>
         </div>
         <router-link to="/addartist">
           <button
@@ -90,9 +149,12 @@
       <div class="w-[20%]">Working time</div>
       <div class="w-[20%]">Actions</div>
     </div>
-    <div class="w-full h-[650px] overflow-auto">
+    <div
+      v-if="filteredAndSortedData.length > 0"
+      class="w-full h-[650px] overflow-auto"
+    >
       <div
-        v-for="user in dataitem"
+        v-for="user in filteredAndSortedData"
         :key="user"
         class="flex w-full overflow-hidden text-black font-semibold justify-between p-2 bg-white border-b-2 border-black border-opacity-50"
       >
@@ -165,6 +227,11 @@
         </div>
       </div>
     </div>
+    <div v-else class="w-full h-[700px] flex items-center justify-center">
+      <div class="w-[200px] p-5">
+        <h1>Not Found</h1>
+      </div>
+    </div>
     <div>
       <div class="w-full mt-3 flex items-center justify-end">
         <nav aria-label="Page navigation example">
@@ -234,13 +301,20 @@
 <script>
 import { useRouter } from "vue-router";
 import { getCollectionQuery } from "@/composible/getCollection";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
+import { Dropdown, Ripple, initTE } from "tw-elements";
+
 export default {
   setup() {
     const dataitem = ref([]);
-    onMounted(() => {
-      getData();
+    const searchQuery = ref("");
+    const sortBy = ref(null);
+
+    onMounted(async () => {
+      await getData();
+      initTE({ Dropdown, Ripple });
     });
+
     const getData = async () => {
       try {
         await getCollectionQuery(
@@ -252,9 +326,41 @@ export default {
           true
         );
       } catch (error) {
-        return error.message;
+        console.error("Error fetching data:", error.message);
       }
     };
+
+    const filteredAndSortedData = computed(() => {
+      let filteredData = dataitem.value.filter((artist) => {
+        return artist.name
+          .toLowerCase()
+          .includes(searchQuery.value.toLowerCase());
+      });
+
+      if (sortBy.value === "active" || sortBy.value === "inactive") {
+        filteredData = filteredData.filter(
+          (artist) => artist.statuse === sortBy.value
+        );
+      } else if (sortBy.value === "Mon-Fri" || sortBy.value === "Sat-Sun") {
+        filteredData = filteredData.filter(
+          (artist) => artist.workingday === sortBy.value
+        );
+      } else if (
+        sortBy.value === "Morning Section" ||
+        sortBy.value === "Afternoon Section"
+      ) {
+        filteredData = filteredData.filter(
+          (artist) => artist.workingtime === sortBy.value
+        );
+      }
+
+      return filteredData;
+    });
+
+    const handleSort = (sortValue) => {
+      sortBy.value = sortValue;
+    };
+
     const router = useRouter();
 
     const handleEdit = (id) => {
@@ -264,9 +370,13 @@ export default {
         query: { id: id },
       });
     };
+
     return {
       handleEdit,
       dataitem,
+      filteredAndSortedData,
+      handleSort,
+      searchQuery,
     };
   },
 };

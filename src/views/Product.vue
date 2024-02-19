@@ -36,8 +36,12 @@
               /></svg
           ></span>
         </div>
-        <div>
+        <div class="relative" data-te-dropdown-ref>
           <button
+            id="dropdownMenuButton1"
+            data-te-dropdown-toggle-ref
+            aria-expanded="false"
+            data-te-ripple-init
             class="px-4 h-8 shadow rounded-lg border-primary1 border-2 flex justify-start items-center"
           >
             <span
@@ -58,6 +62,52 @@
             </span>
             Filter
           </button>
+          <ul
+            class="absolute z-[1000] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-isGray [&[data-te-dropdown-show]]:block"
+            aria-labelledby="dropdownMenuButton1"
+            data-te-dropdown-menu-ref
+          >
+            <li @click="handleSort('active')">
+              <a
+                class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                href="#"
+                data-te-dropdown-item-ref
+                >Sort by Active</a
+              >
+            </li>
+            <li @click="handleSort('inactive')">
+              <a
+                class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                href="#"
+                data-te-dropdown-item-ref
+                >Sort by Inactive</a
+              >
+            </li>
+            <li @click="handleSort('Tattoo')">
+              <a
+                class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                href="#"
+                data-te-dropdown-item-ref
+                >Sort by Tattoo</a
+              >
+            </li>
+            <li @click="handleSort('Piercing')">
+              <a
+                class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                href="#"
+                data-te-dropdown-item-ref
+                >Sort by Piercing</a
+              >
+            </li>
+            <li @click="handleSort('Tattoo Removal')">
+              <a
+                class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                href="#"
+                data-te-dropdown-item-ref
+                >Sort by Tattoo Removal</a
+              >
+            </li>
+          </ul>
         </div>
         <div>
           <router-link
@@ -91,9 +141,12 @@
       <div class="w-[20%]">Type</div>
       <div class="w-[20%]">Actions</div>
     </div>
-    <div class="w-full h-[700px] overflow-auto">
+    <div
+      v-if="filteredAndSortedData.length > 0"
+      class="w-full h-[700px] overflow-auto"
+    >
       <div
-        v-for="product in filteredData"
+        v-for="product in filteredAndSortedData"
         :key="product.id"
         class="flex w-full text-black font-semibold justify-between p-4 bg-white border-b-2 border-black border-opacity-50"
       >
@@ -208,10 +261,16 @@
         </div>
       </div>
     </div>
+    <div v-else class="w-full h-[700px] flex items-center justify-center">
+      <div class="w-[200px] p-5">
+        <h1>Not Found</h1>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import { Dropdown, Ripple, initTE } from "tw-elements";
 import { onMounted, ref, computed } from "vue";
 import useCollection from "../composible/useCollection";
 import useStorage from "../composible/useStorange";
@@ -240,6 +299,7 @@ export default {
 
     onMounted(() => {
       getData();
+      initTE({ Dropdown, Ripple });
     });
     const router = useRouter();
     const isAddProductOpen = ref(true);
@@ -262,13 +322,34 @@ export default {
     const isActive = ref(null);
     const img = ref(null);
     const searchQuery = ref("");
-    const filteredData = computed(() => {
-      return dataitem.value.filter((product) => {
+    const sortBy = ref(null);
+    const filteredAndSortedData = computed(() => {
+      let filteredData = dataitem.value.filter((product) => {
         return product.name
           .toLowerCase()
           .includes(searchQuery.value.toLowerCase());
       });
+
+      if (sortBy.value === "active" || sortBy.value === "inactive") {
+        filteredData = filteredData.filter(
+          (product) => product.status === sortBy.value
+        );
+      } else if (
+        sortBy.value === "Tattoo" ||
+        sortBy.value === "Piercing" ||
+        sortBy.value === "Tattoo Removal"
+      ) {
+        filteredData = filteredData.filter(
+          (product) => product.type === sortBy.value
+        );
+      }
+
+      return filteredData;
     });
+
+    const handleSort = (sortValue) => {
+      sortBy.value = sortValue;
+    };
 
     const handleFileChange = (event) => {
       const file = event.target.files[0];
@@ -366,7 +447,8 @@ export default {
       deleteProduct,
       handleEdit,
       searchQuery,
-      filteredData,
+      filteredAndSortedData,
+      handleSort,
     };
   },
 };

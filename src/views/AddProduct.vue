@@ -107,7 +107,6 @@ import { useRouter } from "vue-router";
 import { useRoute } from "vue-router";
 
 import getDataByid from "../composible/getCollectionbyid";
-
 export default {
   props: ["id"],
   setup() {
@@ -175,7 +174,7 @@ export default {
         img.value = null;
 
         console.log("Product operation successful");
-        router.push({ name: "addproducts" }); // Corrected the route name
+        router.push({ name: "/products" }); // Corrected the route name
       } catch (error) {
         console.error("Error performing product operation:", error);
       }
@@ -196,7 +195,6 @@ export default {
         img.value = postData.image;
       }
     });
-
     return {
       productName,
       selectedType,
