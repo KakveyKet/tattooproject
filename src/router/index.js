@@ -15,6 +15,14 @@ import ServiceAndProductVue from '@/client/ServiceAndProduct.vue';
 import ContactUsVue from '@/client/ContactUs.vue';
 import AboutUs from '@/client/AboutUs.vue';
 import BookingUser from '@/client/Booking.vue';
+import FeedbackVue from '@/client/Feedback.vue';
+
+import AddProductVue from '@/views/AddProduct.vue';
+import ProductDeatilVue from '@/views/ProductDeatil.vue';
+import AddArtistVue from '@/views/AddArtist.vue';
+
+import LoginVue from '@/views/Login.vue';
+import SiginUpVue from '@/views/SiginUp.vue';
 const routes = [
   {
 
@@ -51,6 +59,10 @@ const routes = [
         path: '/bookingUser',
         name: "bookingUser",
         component: BookingUser
+      }, {
+        path: '/feedback',
+        name: 'feedback',
+        component: FeedbackVue
       }
     ]
   },
@@ -78,10 +90,34 @@ const routes = [
         path: '/booking',
         name: 'booking',
         component: BookingVue
+      }, {
+        path: '/addproducts',
+        name: "addproducts",
+        component: AddProductVue,
+        props: true
+      }, {
+        path: '/addartist',
+        name: "addartist",
+        component: AddArtistVue
       }
     ]
   }
-
+  , {
+    path: "/products/:id",
+    name: "productdetail",
+    component: ProductDeatilVue,
+    props: true
+  },
+  {
+    path: '/signup',
+    name: 'signup',
+    component: SiginUpVue
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: LoginVue
+  }
 ]
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),

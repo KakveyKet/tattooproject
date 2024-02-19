@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full h-auto p-2 bg-isGray">
+  <div class="w-full p-2 h-screen bg-isGray">
     <div class="lg:hidden md:hidden xl:hidden block w-full mt-12">
       <h1 class="text-center py-4 text-white text-2xl font-semibold">
         CONTACT US

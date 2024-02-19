@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full p-3">
+  <div class="w-full h-full p-3">
     <div class="w-full lg:mt-0 xl:mt-0 md:mt-0 mt-20">
       <h1 class="text-center py-2 text-white text-2xl font-semibold">
         Our Services
@@ -65,7 +65,7 @@
     <div
       class="w-2/3 h-[2px] lg:blocl xl:block md:block hidden mt-4 bg-white mx-auto"
     ></div>
-    <div class="w-full lg:hidden xl:hidden md:hidden blo p-1">
+    <div class="w-full lg:hidden xl:hidden md:hidden block p-1">
       <div class="w-[95%] border-b-2 border-white py-2">
         <img src="./Image/2.png" class="w-full brightness-200" />
         <div>

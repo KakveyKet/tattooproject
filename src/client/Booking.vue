@@ -1,16 +1,16 @@
 <template>
-  <div class="w-full h-auto bg-isGray">
+  <div class="w-full h-auto bg-isGray relative">
     <div class="w-full lg:w-1/2 mx-auto md:w-1/3 xl:w-1/2 p-2">
       <h1 class="text-center text-white text-xl font-serif font-bold mt-14">
         LET'S GET IN TOUCH
       </h1>
-      <form class="w-full">
-        <!-- 1 -->
+      <form @submit.prevent="addProduct" class="w-full">
+        <!-- 1 first name last name 18 year -->
         <div class="mt-10 space-y-4">
           <label class="flex flex-col-reverse relative focus group">
             <input
               type="text"
-              name="email"
+              v-model="firstName"
               required
               autofocus
               placeholder="First Name *"
@@ -20,7 +20,7 @@
           <label class="flex flex-col-reverse relative focus group">
             <input
               type="text"
-              name="email"
+              v-model="lastName"
               required
               placeholder="Last Name *"
               class="border-2 border-white bg-transparent px-4 py-2 text-white leading-10 rounded-md outline-none"
@@ -31,14 +31,19 @@
             >
             </span>
           </label>
-          <input type="checkbox" class="w-5 h-5 bg-transparent" />
+          <input
+            v-model="yearChecked"
+            type="checkbox"
+            class="w-5 h-5 bg-transparent"
+          />
           <span class="ml-3 text-white">I'm 18 Years old or older</span>
         </div>
-        <!-- 2 -->
+        <!-- 2 email phone-->
         <div class="mt-4 space-y-4">
           <label class="flex flex-col-reverse relative focus group">
             <input
               type="text"
+              v-model="email"
               required
               placeholder="Email *"
               class="border-2 border-white bg-transparent px-4 py-2 text-white leading-10 rounded-md outline-none"
@@ -47,6 +52,7 @@
           <label class="flex flex-col-reverse relative focus group">
             <input
               type="text"
+              v-model="phoneNumber"
               required
               placeholder="Phone Number *"
               class="border-2 border-white bg-transparent px-4 py-2 text-white leading-10 rounded-md outline-none"
@@ -58,68 +64,38 @@
             </span>
           </label>
         </div>
-        <!-- 3 -->
+        <!-- date time -->
         <div class="mt-2">
           <div class="w-full px-2 py-3 border-white border-2 rounded-md">
-            <ejs-datetimepicker placeholder="សូមជ្រើសរើស"> </ejs-datetimepicker>
+            <ejs-datetimepicker
+              v-model="dateTime"
+              placeholder="Choose Date Time"
+            >
+            </ejs-datetimepicker>
           </div>
         </div>
-        <!-- 4 -->
+        <!-- 4 choose option text area-->
         <div class="mt-2">
           <h1 class="text-white text-xl font-semibold">
             Choose Service <span class="text-red-600">*</span>
           </h1>
           <!-- TW Elements is free under AGPL, with commercial license required for specific uses. See more details: https://tw-elements.com/license/ and contact us for queries at tailwind@mdbootstrap.com -->
-          <div class="mb-[0.125rem] block min-h-[1.5rem] pl-[1.5rem]">
-            <input
-              class="relative float-left -ml-[1.5rem] mr-1 mt-0.5 h-5 w-5 appearance-none rounded-full border-2 border-solid border-neutral-300 before:pointer-events-none before:absolute before:h-4 before:w-4 before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-[''] after:absolute after:z-[1] after:block after:h-4 after:w-4 after:rounded-full after:content-[''] checked:border-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:h-[0.625rem] checked:after:w-[0.625rem] checked:after:rounded-full checked:after:border-primary checked:after:bg-primary checked:after:content-[''] checked:after:[transform:translate(-50%,-50%)] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:shadow-none focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:border-primary checked:focus:before:scale-100 checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] dark:border-neutral-600 dark:checked:border-primary dark:checked:after:border-primary dark:checked:after:bg-primary dark:focus:before:shadow-[0px_0px_0px_13px_rgba(255,255,255,0.4)] dark:checked:focus:border-primary dark:checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca]"
-              type="radio"
-              name="flexRadioDefault"
-              id="radioDefault01"
-            />
-            <label
-              class="mt-px inline-block pl-[0.15rem] hover:cursor-pointer text-white text-sm"
-              for="radioDefault01"
-            >
-              Tattoo
-            </label>
-          </div>
-          <div class="mb-[0.125rem] block min-h-[1.5rem] pl-[1.5rem]">
-            <input
-              class="relative float-left -ml-[1.5rem] mr-1 mt-0.5 h-5 w-5 appearance-none rounded-full border-2 border-solid border-neutral-300 before:pointer-events-none before:absolute before:h-4 before:w-4 before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-[''] after:absolute after:z-[1] after:block after:h-4 after:w-4 after:rounded-full after:content-[''] checked:border-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:h-[0.625rem] checked:after:w-[0.625rem] checked:after:rounded-full checked:after:border-primary checked:after:bg-primary checked:after:content-[''] checked:after:[transform:translate(-50%,-50%)] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:shadow-none focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:border-primary checked:focus:before:scale-100 checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] dark:border-neutral-600 dark:checked:border-primary dark:checked:after:border-primary dark:checked:after:bg-primary dark:focus:before:shadow-[0px_0px_0px_13px_rgba(255,255,255,0.4)] dark:checked:focus:border-primary dark:checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca]"
-              type="radio"
-              name="flexRadioDefault"
-              id="radioDefault02"
-              checked
-            />
-            <label
-              class="mt-px inline-block pl-[0.15rem] hover:cursor-pointer text-white text-sm"
-              for="radioDefault02"
-            >
-              Piercing
-            </label>
-          </div>
-          <div class="mb-[0.125rem] block min-h-[1.5rem] pl-[1.5rem]">
-            <input
-              class="relative float-left -ml-[1.5rem] mr-1 mt-0.5 h-5 w-5 appearance-none rounded-full border-2 border-solid border-neutral-300 before:pointer-events-none before:absolute before:h-4 before:w-4 before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-[''] after:absolute after:z-[1] after:block after:h-4 after:w-4 after:rounded-full after:content-[''] checked:border-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:h-[0.625rem] checked:after:w-[0.625rem] checked:after:rounded-full checked:after:border-primary checked:after:bg-primary checked:after:content-[''] checked:after:[transform:translate(-50%,-50%)] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:shadow-none focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:border-primary checked:focus:before:scale-100 checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] dark:border-neutral-600 dark:checked:border-primary dark:checked:after:border-primary dark:checked:after:bg-primary dark:focus:before:shadow-[0px_0px_0px_13px_rgba(255,255,255,0.4)] dark:checked:focus:border-primary dark:checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca]"
-              type="radio"
-              name="flexRadioDefault"
-              id="radioDefault02"
-              checked
-            />
-            <label
-              class="mt-px inline-block pl-[0.15rem] hover:cursor-pointer text-white text-sm"
-              for="radioDefault02"
-            >
-              Tattoo Removal
-            </label>
+          <div
+            class="mb-[0.125rem] block min-h-[1.5rem] pl-[1.5rem] border-2 border-white bg-transparent px-4 py-2 text-black leading-10 rounded-md outline-none"
+          >
+            <select class="bg-transparent text-white" v-model="chooseOption">
+              <option v-for="item in chooseOptions" :key="item" :value="item">
+                {{ item }}
+              </option>
+            </select>
           </div>
         </div>
-        <!-- 5 -->
+        <!-- 5 artsit body orther-->
         <div class="mt-4 space-y-4">
           <label class="flex flex-col-reverse relative focus group">
             <input
               type="text"
+              v-model="artist"
               required
               placeholder="Preferred Artist *"
               class="border-2 border-white bg-transparent px-4 py-2 text-white leading-10 rounded-md outline-none"
@@ -128,6 +104,7 @@
           <label class="flex flex-col-reverse relative focus group">
             <input
               type="text"
+              v-model="bodyPreference"
               placeholder="Preferred Loacation body "
               class="border-2 border-white bg-transparent px-4 py-2 text-white leading-10 rounded-md outline-none"
             />
@@ -141,6 +118,7 @@
             <input
               type="text"
               placeholder="Other "
+              v-model="other"
               class="border-2 border-white bg-transparent px-4 py-2 text-white leading-10 rounded-md outline-none"
             />
 
@@ -149,9 +127,22 @@
             >
             </span>
           </label>
+          <label class="flex-col-reverse relative focus group hidden">
+            <input
+              type="text"
+              placeholder="status "
+              v-model="status"
+              class="border-2 border-white bg-transparent px-4 py-2 text-white leading-10 rounded-md outline-none"
+            />
+            <span
+              class="absolute text-xl transform text-white -translate-y-3 placeholder:text-white placeholder:text-2xl left-4 transition leading-10 group-focus:opacity-0"
+            >
+            </span>
+          </label>
           <label class="flex flex-col-reverse relative focus group">
             <textarea
               type="text"
+              v-model="description"
               placeholder="Description "
               class="border-2 border-white bg-transparent px-4 py-2 text-white leading-10 rounded-md outline-none"
             />
@@ -162,7 +153,7 @@
             </span>
           </label>
         </div>
-        <!-- 6 -->
+        <!-- 6 file-->
         <div class="mt-4">
           <section class="overflow-auto w-full h-1/2 flex flex-col">
             <header
@@ -173,30 +164,192 @@
               >
                 <span>Photo Preferred</span>
               </p>
-              <input id="hidden-input" type="file" />
+              <input @change="handleFileChange" id="hidden-input" type="file" />
             </header>
           </section>
         </div>
 
-        <div class="mt-4 flex">
+        <div class="mt-4 w-full flex items-center justify-end">
           <button
             type="submit"
-            class="bg-delete px-5 py-1 rounded-lg mx-auto text-white text-xl"
+            class="bg-delete w-full py-2 rounded-lg text-white text-xl"
           >
             Submit
           </button>
         </div>
       </form>
     </div>
+    <div
+      class="fixed bg-white p-5 top-20 right-4 flex items-center justify-center gap-5 rounded-md shadow"
+      :class="{
+        '-translate-x-[1%] transition ease-in-out duration-300': isPending,
+        'translate-x-[120%] transition ease-in-out duration-300 ': !isPending,
+      }"
+    >
+      <div class="">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-8 h-8 text-green-600"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+          />
+        </svg>
+      </div>
+      <div><h1>Your booking has been sent successfully!</h1></div>
+    </div>
   </div>
 </template>
 
 <script>
+import useCollection from "@/composible/useCollection";
+import useStorage from "@/composible/useStorange";
+import { timestamp } from "@/firebase/config";
+
+import { ref, computed } from "vue";
 export default {
   setup() {
-    return {};
+    const { uploadImage, removeImage } = useStorage();
+    const { addDocs, removeDoc, updateDocs } = useCollection("bookings");
+    const isPending = ref(false);
+    const firstName = ref("");
+    const lastName = ref("");
+    const year = ref(false);
+    const email = ref("");
+    const dateTime = ref("");
+    const phoneNumber = ref("");
+    const chooseOption = ref("");
+    const artist = ref("");
+    const bodyPreference = ref("");
+    const other = ref("");
+    const description = ref("");
+    const status = ref("Prending");
+    const chooseOptions = ref(["Tattoo", "Piercing ", "Tattoo Removal "]);
+    const img = ref(null);
+    const handleFileChange = (event) => {
+      const file = event.target.files[0];
+      if (!file) {
+        console.error("No file selected.");
+        return;
+      }
+
+      const allowedExtensions = ["jpg", "png", "svg", "jpeg"];
+      const extension = file.name.split(".").pop().toLowerCase();
+
+      if (!allowedExtensions.includes(extension)) {
+        console.error("Only jpg, png, svg, and jpeg files are allowed.");
+        return;
+      }
+
+      img.value = file;
+    };
+    const yearChecked = computed({
+      get: () => year.value,
+      set: (newValue) => {
+        year.value = newValue;
+        if (newValue) {
+          year.value = 18;
+        } else {
+          year.value = null;
+        }
+      },
+    });
+    const addProduct = async () => {
+      try {
+        if (
+          !firstName.value ||
+          !lastName.value ||
+          !email.value ||
+          !dateTime.value ||
+          !chooseOption.value ||
+          !artist.value ||
+          !status.value
+        ) {
+          console.error("Required fields are empty. Please fill them out.");
+          return;
+        }
+
+        let imageURL = null;
+        if (img.value) {
+          if (img.value.size > 1024 * 1024) {
+            console.error("Image size exceeds 1MB limit.");
+            return;
+          }
+          const storagePath = `products/${img.value.name}`;
+          imageURL = await uploadImage(storagePath, img.value);
+        }
+        setTimeout(() => {
+          // Set isPending to true after 3 seconds
+          isPending.value = true;
+
+          // Set isPending back to false after another 3 seconds
+          setTimeout(() => {
+            isPending.value = false;
+          }, 2000);
+        }, 2000);
+        const productData = {
+          firstname: firstName.value,
+          lastname: lastName.value,
+          years: year.value,
+          email: email.value,
+          phone: phoneNumber.value,
+          datetime: dateTime.value,
+          option: chooseOption.value,
+          artist: artist.value,
+          body: bodyPreference.value,
+          other: other.value,
+          description: description.value,
+          status: status.value,
+          img: imageURL,
+          createdAt: timestamp(),
+        };
+
+        await addDocs(productData);
+
+        firstName.value = "";
+        lastName.value = "";
+        year.value = "";
+        email.value = "";
+        phoneNumber.value = "";
+        dateTime.value = "";
+        chooseOption.value = "";
+        artist.value = "";
+        bodyPreference.value = "";
+        other.value = "";
+        description.value = "";
+        img.value = null;
+        console.log("Product operation successful");
+      } catch (error) {
+        console.error("Error performing product operation:", error);
+      }
+    };
+
+    return {
+      firstName,
+      lastName,
+      year,
+      email,
+      dateTime,
+      chooseOption,
+      artist,
+      bodyPreference,
+      other,
+      description,
+      img,
+      phoneNumber,
+      chooseOptions,
+      handleFileChange,
+      addProduct,
+      yearChecked,
+      isPending,
+      status,
+    };
   },
 };
 </script>
-
-<style></style>

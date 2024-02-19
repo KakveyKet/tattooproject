@@ -1,6 +1,6 @@
 <template>
-  <div class="w-full h-auto bg-isGray">
-    <div class="content w-full bg-opacity-50 h-[250px]">
+  <div class="w-full h-full bg-isGray">
+    <div class="content w-full bg-opacity-50 h-[550px]">
       <div
         class="w-full h-full flex flex-col justify-center items-center bg-black bg-opacity-50 p-3"
       >
@@ -15,13 +15,10 @@
         </p>
         <div class="flex justify-between space-x-10 mt-8">
           <button
-            class="px-4 py-1 border-2 text-white border-red-600 rounded-md"
+            @click="handleGotoBooking"
+            class="px-14 py-3 border-2 text-white text-xl border-red-600 rounded-md"
           >
-            Call Us</button
-          ><button
-            class="px-4 py-1 border-2 text-white border-red-600 rounded-md"
-          >
-            Loaction
+            Booking
           </button>
         </div>
       </div>
@@ -36,6 +33,7 @@
 </template>
 
 <script>
+import { useRouter } from "vue-router";
 import ArtistPageVue from "./ArtistPage.vue";
 import ProductPage from "./ProductPage.vue";
 export default {
@@ -43,8 +41,13 @@ export default {
     ProductPage,
     ArtistPageVue,
   },
+
   setup() {
-    return {};
+    const router = useRouter();
+    const handleGotoBooking = () => {
+      router.push({ name: "bookingUser" });
+    };
+    return { handleGotoBooking };
   },
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="p-5 w-full">
+  <div class="p-5 w-full mt-14">
     <div>
       <h1 class="text-xl font-semibold text-[black]">Dashboard</h1>
     </div>
@@ -23,7 +23,7 @@
           </svg>
         </div>
         <div class="font-bold">
-          <h1 class="text-end text-3xl mr-2">19</h1>
+          <h1 class="text-end text-3xl mr-2">{{ bookingList.length }}</h1>
           <p class="mr-2">New Booking</p>
         </div>
       </div>
@@ -45,7 +45,7 @@
           </svg>
         </div>
         <div class="font-bold">
-          <h1 class="text-end text-3xl mr-2">23</h1>
+          <h1 class="text-end text-3xl mr-2">{{ staffList.length }}</h1>
           <p class="mr-2">Total Staff</p>
         </div>
       </div>
@@ -93,11 +93,8 @@
           </svg>
         </div>
         <div class="font-bold">
-          <h1 class="text-end text-3xl mr-2">19</h1>
-          <p class="mr-2">
-            New Viewers <br />
-            this week
-          </p>
+          <h1 class="text-end text-3xl mr-2">{{ productList.length }}</h1>
+          <p class="mr-2">Total Product <br /></p>
         </div>
       </div>
     </div>
@@ -150,11 +147,61 @@
 </template>
 
 <script>
+import { ref, onMounted } from "vue";
+import { getCollectionQuery } from "@/composible/getCollection";
 export default {
   setup() {
-    return {};
+    const bookingList = ref([]);
+    const productList = ref([]);
+    const staffList = ref([]);
+    const getBookingList = async () => {
+      try {
+        await getCollectionQuery(
+          "bookings",
+          [],
+          (data) => {
+            bookingList.value = data;
+          },
+          true
+        );
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+    const getProductList = async () => {
+      try {
+        await getCollectionQuery(
+          "products",
+          [],
+          (data) => {
+            productList.value = data;
+          },
+          true
+        );
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+    const getStaffList = async () => {
+      try {
+        await getCollectionQuery(
+          "artists",
+          [],
+          (data) => {
+            staffList.value = data;
+          },
+          true
+        );
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+    onMounted(() => {
+      getBookingList();
+      getProductList();
+      getStaffList();
+    });
+    return { bookingList, productList, staffList };
   },
 };
 </script>
-
-<style lang="scss" scoped></style>

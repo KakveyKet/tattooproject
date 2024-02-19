@@ -59,6 +59,13 @@
           <span class="text-sm">Booking</span>
         </button>
       </div>
+      <div
+        class="w-10 rounded-full flex items-center justify-center h-10 bg-isGray bg-opacity-50 text-white border"
+      >
+        <h1 class="uppercase">
+          {{ user?.displayName[0] }}
+        </h1>
+      </div>
     </div>
   </div>
   <!-- sm -->
@@ -171,7 +178,7 @@
 
 <script>
 import { Animate, initTE } from "tw-elements";
-
+import getUser from "../composible/getUser";
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 export default {
@@ -179,6 +186,7 @@ export default {
     onMounted(() => {
       initTE({ Animate });
     });
+    const { user } = getUser();
     const router = useRouter();
     const isOpenMenuMobile = ref(true);
     const handleOpenMenuMobile = () => {
@@ -187,7 +195,7 @@ export default {
     const handleGotoBooking = () => {
       router.push({ name: "bookingUser" });
     };
-    return { handleOpenMenuMobile, isOpenMenuMobile, handleGotoBooking };
+    return { handleOpenMenuMobile, isOpenMenuMobile, handleGotoBooking, user };
   },
 };
 </script>

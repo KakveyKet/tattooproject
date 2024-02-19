@@ -1,5 +1,5 @@
 <template>
-  <div class="p-5">
+  <div class="p-5 mt-14">
     <div class="flex justify-between">
       <h1 class="text-xl font-semibold">Artist</h1>
       <div class="flex space-x-4 items-center">
@@ -58,7 +58,7 @@
             Filter
           </button>
         </div>
-        <div>
+        <router-link to="/addartist">
           <button
             class="px-4 h-8 shadow rounded-lg bg-primary1 text-white flex items-center justify-center"
           >
@@ -76,7 +76,7 @@
             ></span>
             add
           </button>
-        </div>
+        </router-link>
       </div>
     </div>
     <div
@@ -90,32 +90,29 @@
       <div class="w-[20%]">Working time</div>
       <div class="w-[20%]">Actions</div>
     </div>
-    <div class="w-full h-[450px] overflow-auto">
+    <div class="w-full h-[650px] overflow-auto">
       <div
-        v-for="user in 7"
+        v-for="user in dataitem"
         :key="user"
         class="flex w-full overflow-hidden text-black font-semibold justify-between p-2 bg-white border-b-2 border-black border-opacity-50"
       >
         <div class="w-[20%] flex items-center">
-          <img
-            class="w-12 h-12 rounded-full"
-            src="https://i.pinimg.com/564x/ba/27/55/ba27554170f8d6a7852d2bd661a152bb.jpg"
-            alt=""
-          />
+          <img class="w-12 h-12 rounded-full" :src="user.image" alt="" />
         </div>
-        <div class="w-[20%] flex items-center">Inosuke</div>
-        <div class="w-[20%] flex items-center">Tattoo design /artist</div>
+        <div class="w-[20%] flex items-center">{{ user.name }}</div>
+        <div class="w-[20%] flex items-center">{{ user.bio }} /artist</div>
         <div class="w-[20%] flex items-center">
           <div class="w-[20%] flex items-center">
             <button
-              class="bg-active text-lg text-black ml-12 rounded-full px-5 py-[2px]"
+              class="bg-active text-lg text-white ml-12 rounded-full px-5 py-[2px]"
+              :class="{ 'bg-red-600': user.statuse == 'inactive' }"
             >
-              Active
+              {{ user.statuse }}
             </button>
           </div>
         </div>
-        <div class="w-[20%] flex items-center">Mon-Fri</div>
-        <div class="w-[20%] flex items-center">Morning section</div>
+        <div class="w-[20%] flex items-center">{{ user.workingday }}</div>
+        <div class="w-[20%] flex items-center">{{ user.workingtime }}</div>
 
         <div class="w-[20%] flex items-center space-x-2">
           <button class="bg-view p-1 rounded bg-opacity-50">
@@ -133,7 +130,10 @@
               />
             </svg>
           </button>
-          <button class="bg-active p-1 rounded bg-opacity-50">
+          <button
+            @click="handleEdit(user.id)"
+            class="bg-active p-1 rounded bg-opacity-50"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -232,11 +232,42 @@
 </template>
 
 <script>
+import { useRouter } from "vue-router";
+import { getCollectionQuery } from "@/composible/getCollection";
+import { ref, onMounted } from "vue";
 export default {
   setup() {
-    return {};
+    const dataitem = ref([]);
+    onMounted(() => {
+      getData();
+    });
+    const getData = async () => {
+      try {
+        await getCollectionQuery(
+          "artists",
+          [],
+          (data) => {
+            dataitem.value = data;
+          },
+          true
+        );
+      } catch (error) {
+        return error.message;
+      }
+    };
+    const router = useRouter();
+
+    const handleEdit = (id) => {
+      router.push({
+        name: "addartist",
+        params: { id: id },
+        query: { id: id },
+      });
+    };
+    return {
+      handleEdit,
+      dataitem,
+    };
   },
 };
 </script>
-
-<style lang="scss" scoped></style>

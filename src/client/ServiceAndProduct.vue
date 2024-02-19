@@ -47,7 +47,10 @@
       class="w-full h-auto grid grid-cols-2 lg:grid-cols-6 xl:grid-cols-6 md:grid-cols-5 lg:gap-3 xl:gap-3 gap-1"
     >
       <div
-        class="bg-[url('https://i.pinimg.com/736x/55/cf/f7/55cff7168c5445ad51f30c5b7c55b18d.jpg')] bg-cover w-[90%] xl:w-[300px] h-[200px] lg:h-96 relative m-2"
+        v-for="cart in dataitem"
+        :key="cart.id"
+        :style="{ backgroundImage: `url('${cart.image}')` }"
+        class="bg-cover w-[90%] xl:w-[300px] h-[200px] lg:h-96 relative m-2"
       >
         <button
           class="absolute group top-0 right-0 duration-300 focus:bg-slate-900 focus:bg-opacity-70 w-full h-full flex flex-col items-center justify-center"
@@ -56,124 +59,14 @@
             <h1
               class="text-[18px] font-bold group-focus:text-green-400 text-transparent py-2"
             >
-              Small tattoo
+              {{ cart.name }}
             </h1>
           </div>
           <div class="w-[70%] h-[90%]">
             <p
               class="text-transparent text-[12px] inline-block group-focus:text-white font-semibold"
             >
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            </p>
-          </div>
-        </button>
-      </div>
-      <div
-        class="bg-[url('https://i.pinimg.com/564x/5a/06/90/5a0690b3c5d1e235a962324d6a23db79.jpg')] bg-cover w-[90%] xl:w-[300px] h-[200px] lg:h-96 relative m-2"
-      >
-        <button
-          class="absolute group top-0 right-0 duration-300 focus:bg-slate-900 focus:bg-opacity-70 w-full h-full flex flex-col items-center justify-center"
-        >
-          <div>
-            <h1
-              class="text-[18px] font-bold group-focus:text-green-400 text-transparent py-2"
-            >
-              Small tattoo
-            </h1>
-          </div>
-          <div class="w-[70%] h-[90%]">
-            <p
-              class="text-transparent text-[12px] inline-block group-focus:text-white font-semibold"
-            >
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            </p>
-          </div>
-        </button>
-      </div>
-      <div
-        class="bg-[url('https://i.pinimg.com/564x/f3/38/c5/f338c5cd371671da1ee47dcf9aecdcf0.jpg')] bg-cover w-[90%] xl:w-[300px] h-[200px] lg:h-96 relative m-2"
-      >
-        <button
-          class="absolute group top-0 right-0 duration-300 focus:bg-slate-900 focus:bg-opacity-70 w-full h-full flex flex-col items-center justify-center"
-        >
-          <div>
-            <h1
-              class="text-[18px] font-bold group-focus:text-green-400 text-transparent py-2"
-            >
-              Small tattoo
-            </h1>
-          </div>
-          <div class="w-[70%] h-[90%]">
-            <p
-              class="text-transparent text-[12px] inline-block group-focus:text-white font-semibold"
-            >
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            </p>
-          </div>
-        </button>
-      </div>
-      <div
-        class="bg-[url('https://i.pinimg.com/736x/b4/ef/1f/b4ef1f7b73c48480b6e5cb3c6c389e15.jpg')] bg-cover w-[90%] xl:w-[300px] h-[200px] lg:h-96 relative m-2"
-      >
-        <button
-          class="absolute group top-0 right-0 duration-300 focus:bg-slate-900 focus:bg-opacity-70 w-full h-full flex flex-col items-center justify-center"
-        >
-          <div>
-            <h1
-              class="text-[18px] font-bold group-focus:text-green-400 text-transparent py-2"
-            >
-              Small tattoo
-            </h1>
-          </div>
-          <div class="w-[70%] h-[90%]">
-            <p
-              class="text-transparent text-[12px] inline-block group-focus:text-white font-semibold"
-            >
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            </p>
-          </div>
-        </button>
-      </div>
-      <div
-        class="bg-[url('https://i.pinimg.com/564x/17/b1/0f/17b10f5d693f5f6039fdaa3284bd52b1.jpg')] bg-cover w-[90%] xl:w-[300px] h-[200px] lg:h-96 relative m-2"
-      >
-        <button
-          class="absolute group top-0 right-0 duration-300 focus:bg-slate-900 focus:bg-opacity-70 w-full h-full flex flex-col items-center justify-center"
-        >
-          <div>
-            <h1
-              class="text-[18px] font-bold group-focus:text-green-400 text-transparent py-2"
-            >
-              Small tattoo
-            </h1>
-          </div>
-          <div class="w-[70%] h-[90%]">
-            <p
-              class="text-transparent text-[12px] inline-block group-focus:text-white font-semibold"
-            >
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            </p>
-          </div>
-        </button>
-      </div>
-      <div
-        class="bg-[url('https://i.pinimg.com/564x/5b/97/39/5b97395c7edb0e70406ac9e031a29692.jpg')] bg-cover w-[90%] xl:w-[300px] h-[200px] lg:h-96 relative m-2"
-      >
-        <button
-          class="absolute group top-0 right-0 duration-300 focus:bg-slate-900 focus:bg-opacity-70 w-full h-full flex flex-col items-center justify-center"
-        >
-          <div>
-            <h1
-              class="text-[18px] font-bold group-focus:text-green-400 text-transparent py-2"
-            >
-              Small tattoo
-            </h1>
-          </div>
-          <div class="w-[70%] h-[90%]">
-            <p
-              class="text-transparent text-[12px] inline-block group-focus:text-white font-semibold"
-            >
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              {{ cart.description }}
             </p>
           </div>
         </button>
@@ -219,12 +112,34 @@
 
 <script>
 import ServiceHigthlightVue from "./ServiceHigthlight.vue";
+import { getCollectionQuery } from "../composible/getCollection";
+import { ref, onMounted } from "vue";
 export default {
   components: {
     ServiceHigthlightVue,
   },
   setup() {
-    return {};
+    const getData = async () => {
+      try {
+        await getCollectionQuery(
+          "products",
+          [],
+          (data) => {
+            dataitem.value = data;
+          },
+          true
+        );
+      } catch (error) {
+        return error.message;
+      }
+    };
+    const dataitem = ref([]);
+    onMounted(() => {
+      getData();
+    });
+    return {
+      dataitem,
+    };
   },
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full bg-isGray">
+  <div class="w-full h-auto bg-isGray">
     <div class="w-full">
       <h1 class="text-center py-2 text-white text-2xl font-semibold">
         Outstanding Tattoos
@@ -39,7 +39,7 @@
         alt=""
       />
     </div>
-    <div class="lg:block xl:block md:block hidden h-auto w-[90%] mx-auto">
+    <div class="lg:block xl:block md:block hidden h-screen w-[90%] mx-auto">
       <!-- TW Elements is free under AGPL, with commercial license required for specific uses. See more details: https://tw-elements.com/license/ and contact us for queries at tailwind@mdbootstrap.com -->
       <div
         id="carouselExampleIndicators"
@@ -180,13 +180,36 @@
 
 <script>
 import { Carousel, initTE } from "tw-elements";
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
+import { getCollectionQuery } from "../composible/getCollection";
+
 export default {
   setup() {
     onMounted(() => {
       initTE({ Carousel });
     });
-    return {};
+
+    const getData = async () => {
+      try {
+        await getCollectionQuery(
+          "products",
+          [],
+          (data) => {
+            dataitem.value = data;
+          },
+          true
+        );
+      } catch (error) {
+        return error.message;
+      }
+    };
+    const dataitem = ref([]);
+    onMounted(() => {
+      getData();
+    });
+    return {
+      dataitem,
+    };
   },
 };
 </script>
