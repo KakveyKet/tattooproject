@@ -20,11 +20,13 @@
         </button>
       </div>
     </div>
-    <div class="w-1/2 mx-20 mt-12 space-y-2">
+    <div
+      class="lg:w-1/2 xl:w-1/2 md:w-1/2 w-full xl:mx-20 lg:mx-20 md:mx-20 mx-auto mt-12 space-y-2"
+    >
       <div
         v-for="feedback in dataitem"
         :key="feedback.id"
-        class="w-full max-w-[70%] p-4 bg-card rounded-md"
+        class="w-full lg:max-w-[70%] xl:max-w-[70%] md:max-w-[70%] max-w-full p-4 bg-card rounded-md"
       >
         <div class="flex items-center space-x-3">
           <div

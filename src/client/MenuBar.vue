@@ -149,7 +149,13 @@
           Tattoo
         </h1>
       </div>
+      <div v-if="!user" class="">
+        <button @click="handleSignIn" class="bg-card px-4 py-1 rounded-md">
+          Sign In
+        </button>
+      </div>
       <div
+        v-else
         class="w-10 h-10 border border-card rounded-full flex items-center justify-center"
       >
         <h1 class="uppercase text-white">
