@@ -53,7 +53,7 @@
       </div>
       <div class="space-y-2 mt-4">
         <button class="w-full py-2 bg-active text-white rounded-lg">
-          Sign In
+          Sign Up
         </button>
       </div>
       <div class="space-y-2 mt-4">
@@ -69,6 +69,7 @@
 import { ref } from "vue";
 import useCollection from "@/composible/useCollection";
 import useSignUp from "@/composible/Signup";
+import { useRouter } from "vue-router";
 export default {
   setup() {
     const username = ref("");
@@ -77,6 +78,7 @@ export default {
     const confirmpassword = ref("");
     const { addUser } = useCollection("users");
     const { signup, error } = useSignUp();
+    const router = useRouter();
     const handleSigUp = async () => {
       try {
         if (password.value !== confirmpassword.value) {
@@ -89,7 +91,7 @@ export default {
             username: username.value,
           });
 
-          router.push({ name: "home" });
+          router.push({ name: "homeweb" });
         }
       } catch (err) {
         error.value = err.message;
