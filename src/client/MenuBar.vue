@@ -38,7 +38,7 @@
       >
       <div class="w-[2px] h-4 bg-white"></div>
 
-      <div>
+      <!-- <div>
         <button
           @click.prevent="handleGotoBooking"
           class="px-2 py-1 bg-red-600 rounded active:bg-red-800 duration-300 hover:bg-red-700 text-white flex items-center space-x-2"
@@ -58,13 +58,50 @@
           </svg>
           <span class="text-sm">Booking</span>
         </button>
+      </div> -->
+      <div v-if="!user" class="">
+        <button @click="handleSignIn" class="bg-card px-4 py-1 rounded-md">
+          Sign In
+        </button>
       </div>
       <div
-        class="w-10 rounded-full flex items-center justify-center h-10 bg-isGray bg-opacity-50 text-white border"
+        v-else
+        data-te-dropdown-ref
+        class="w-10 rounded-full flex items-center justify-center h-10 bg-isGray bg-opacity-50 text-white border relative"
       >
-        <h1 class="uppercase">
+        <button
+          id="dropdownMenuButton1"
+          data-te-dropdown-toggle-ref
+          aria-expanded="false"
+          data-te-ripple-init
+          data-te-ripple-color="light"
+          class="uppercase w-8 h-8"
+        >
           {{ user?.displayName[0] }}
-        </h1>
+        </button>
+        <ul
+          class="absolute z-[1000] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
+          aria-labelledby="dropdownMenuButton1"
+          data-te-dropdown-menu-ref
+        >
+          <li>
+            <a
+              class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+              href="#"
+              data-te-dropdown-item-ref
+              >Profile</a
+            >
+          </li>
+          <li>
+            <a
+              @click="handleSignOut"
+              class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+              href="#"
+              data-te-dropdown-item-ref
+              >Log out</a
+            >
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -112,26 +149,12 @@
           Tattoo
         </h1>
       </div>
-      <div>
-        <button
-          @click.prevent="handleGotoBooking"
-          class="px-2 py-1 bg-red-600 rounded active:bg-red-800 duration-300 hover:bg-red-700 text-white flex items-center space-x-2"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            class="w-4 h-4"
-          >
-            <path d="M10.5 18.75a.75.75 0 0 0 0 1.5h3a.75.75 0 0 0 0-1.5h-3Z" />
-            <path
-              fill-rule="evenodd"
-              d="M8.625.75A3.375 3.375 0 0 0 5.25 4.125v15.75a3.375 3.375 0 0 0 3.375 3.375h6.75a3.375 3.375 0 0 0 3.375-3.375V4.125A3.375 3.375 0 0 0 15.375.75h-6.75ZM7.5 4.125C7.5 3.504 8.004 3 8.625 3H9.75v.375c0 .621.504 1.125 1.125 1.125h2.25c.621 0 1.125-.504 1.125-1.125V3h1.125c.621 0 1.125.504 1.125 1.125v15.75c0 .621-.504 1.125-1.125 1.125h-6.75A1.125 1.125 0 0 1 7.5 19.875V4.125Z"
-              clip-rule="evenodd"
-            />
-          </svg>
-          <span class="text-sm">Booking</span>
-        </button>
+      <div
+        class="w-10 h-10 border border-card rounded-full flex items-center justify-center"
+      >
+        <h1 class="uppercase text-white">
+          {{ user?.displayName[0] }}
+        </h1>
       </div>
       <div
         class="fixed top-[60px] w-full right-0 duration-300 z-50 h-screen bg-slate-900 bg-opacity-50"
@@ -177,14 +200,15 @@
 </template>
 
 <script>
-import { Animate, initTE } from "tw-elements";
+import { projectAuth } from "../firebase/config";
+import { Dropdown, Ripple, initTE } from "tw-elements";
 import getUser from "../composible/getUser";
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 export default {
   setup() {
     onMounted(() => {
-      initTE({ Animate });
+      initTE({ Dropdown, Ripple });
     });
     const { user } = getUser();
     const router = useRouter();
@@ -195,7 +219,26 @@ export default {
     const handleGotoBooking = () => {
       router.push({ name: "bookingUser" });
     };
-    return { handleOpenMenuMobile, isOpenMenuMobile, handleGotoBooking, user };
+    const handleSignOut = async () => {
+      try {
+        await projectAuth.signOut();
+        console.log("Sign-out successful");
+        router.push({ name: "signup" });
+      } catch (error) {
+        console.error("Error signing out:", error.message);
+      }
+    };
+    const handleSignIn = () => {
+      router.push({ name: "login" });
+    };
+    return {
+      handleOpenMenuMobile,
+      isOpenMenuMobile,
+      handleGotoBooking,
+      user,
+      handleSignOut,
+      handleSignIn,
+    };
   },
 };
 </script>

@@ -1,4 +1,7 @@
 <template>
+  <div>
+    <Menubar />
+  </div>
   <div class="flex w-full h-screen items-center justify-center">
     <form
       @submit.prevent="handleSignIn"
@@ -42,14 +45,28 @@
       </div>
     </form>
   </div>
+  <div>
+    <FooterVue />
+  </div>
 </template>
 
 <script>
-import { ref } from "vue";
+import Menubar from "../client/MenuBar.vue";
+import { ref, onMounted } from "vue";
 import useSignIn from "../composible/Sigin";
 import { useRouter } from "vue-router";
+import FooterVue from "@/client/Footer.vue";
+import { Dropdown, Ripple, initTE } from "tw-elements";
+
 export default {
+  components: {
+    Menubar,
+    FooterVue,
+  },
   setup() {
+    onMounted(() => {
+      initTE({ Dropdown, Ripple });
+    });
     const { signin, error, isPending } = useSignIn();
     const router = useRouter();
     const email = ref("");
