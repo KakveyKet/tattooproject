@@ -5,7 +5,7 @@
   <div class="flex w-full h-screen items-center justify-center">
     <form
       @submit.prevent="handleSignIn"
-      class="w-[40%] p-5 bg-card shadow-lg rounded-lg"
+      class="lg:w-[40%] xl:w-[50%] md:w-[40%] w-full p-2 bg-card shadow-lg rounded-lg"
     >
       <div class="text-4xl py-8 font-semibold">
         <h1>Sigup New Account</h1>
