@@ -198,6 +198,12 @@
               to="/bookingUser"
               >Booking</router-link
             >
+            <router-link
+              @click.prevent="handleOpenMenuMobile"
+              class="text-xl font-semibold text-white"
+              to="/feedback"
+              >Feedback</router-link
+            >
           </ul>
         </div>
       </div>
