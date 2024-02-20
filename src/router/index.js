@@ -23,6 +23,8 @@ import AddArtistVue from '@/views/AddArtist.vue';
 
 import LoginVue from '@/views/Login.vue';
 import SiginUpVue from '@/views/SiginUp.vue';
+import AdminLoginVue from '@/views/AdminLogin.vue';
+import ReportVue from '@/views/Report.vue';
 const routes = [
   {
 
@@ -99,6 +101,10 @@ const routes = [
         path: '/addartist',
         name: "addartist",
         component: AddArtistVue
+      }, {
+        path: '/report',
+        name: 'report',
+        component: ReportVue
       }
     ]
   }
@@ -117,6 +123,10 @@ const routes = [
     path: '/login',
     name: 'login',
     component: LoginVue
+  }, {
+    path: '/adminlogin',
+    name: 'adminlogin',
+    component: AdminLoginVue
   }
 ]
 const router = createRouter({

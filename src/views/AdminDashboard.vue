@@ -71,7 +71,7 @@
           </svg>
         </div>
         <div class="font-bold">
-          <h1 class="text-end text-3xl mr-2">4</h1>
+          <h1 class="text-end text-3xl mr-2">{{ reviewList.length }}</h1>
           <p class="mr-2">New Reviews</p>
         </div>
       </div>
@@ -154,6 +154,7 @@ export default {
     const bookingList = ref([]);
     const productList = ref([]);
     const staffList = ref([]);
+    const reviewList = ref([]);
     const getBookingList = async () => {
       try {
         await getCollectionQuery(
@@ -196,12 +197,27 @@ export default {
         console.error(error.message);
       }
     };
+    const getreviewfList = async () => {
+      try {
+        await getCollectionQuery(
+          "feedbacks",
+          [],
+          (data) => {
+            reviewList.value = data;
+          },
+          true
+        );
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
     onMounted(() => {
       getBookingList();
       getProductList();
       getStaffList();
+      getreviewfList();
     });
-    return { bookingList, productList, staffList };
+    return { bookingList, productList, staffList, reviewList };
   },
 };
 </script>

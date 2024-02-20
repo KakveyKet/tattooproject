@@ -15,9 +15,12 @@
     </div>
     <div class="flex items-center space-x-3 mr-5 p-2 relative">
       <div
-        class="absolute bg-red-600 text-white top-0 right-16 w-5 flex items-center justify-center rounded-full text-sm h-5"
+        class="absolute bg-red-600 text-white top-0 right-14 w-5 flex items-center justify-center rounded-full text-sm h-5"
       >
-        {{ dataitem.length }}
+        {{
+          dataitem.filter((userbooking) => userbooking.status === "Prending")
+            .length
+        }}
       </div>
       <div>
         <svg
@@ -35,22 +38,34 @@
           />
         </svg>
       </div>
-      <div class="p-1 bg-white rounded-full">
-        <img class="w-9 h-9 rounded-full" src="../assets/img/logo.png" alt="" />
+      <div
+        class="p-1 w-10 h-10 border-2 text-white flex items-center justify-center rounded-full"
+      >
+        <h1>
+          {{ user?.displayName[0] }}
+        </h1>
       </div>
     </div>
+    <!-- <div class="absolute bg-white rounded-md p-4 right-14 top-[100%]">
+      <div v-for="userbooking in dataitem" :key="userbooking.id">
+        <h1>{{ userbooking.status }}</h1>
+      </div>
+    </div> -->
   </div>
 </template>
 
 <script>
 import { getCollectionQuery } from "@/composible/getCollection";
 import { ref, onMounted } from "vue";
+import getUser from "../composible/getUser";
+
 export default {
   setup() {
     const dataitem = ref([]);
     onMounted(() => {
       getData();
     });
+    const { user } = getUser();
     const getData = async () => {
       try {
         await getCollectionQuery(
@@ -65,7 +80,7 @@ export default {
         return error.message;
       }
     };
-    return { dataitem };
+    return { dataitem, user };
   },
 };
 </script>

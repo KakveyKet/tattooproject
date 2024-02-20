@@ -1,6 +1,6 @@
 <template>
   <div class="w-full h-[90vh] bg-isGray p-5 relative">
-    <div class="w-full mt-14">
+    <div class="w-full mt-12">
       <h1 class="font-bold text-2xl text-white text-center">Feedback</h1>
     </div>
     <div
@@ -11,9 +11,7 @@
       </div>
       <div>
         <button
-          data-te-toggle="modal"
-          data-te-target="#exampleModal"
-          data-te-ripple-init
+          @click="openModal"
           class="px-5 py-2 text-white rounded-md border-2 border-card border-opacity-50"
         >
           Add feedback
@@ -21,18 +19,18 @@
       </div>
     </div>
     <div
-      class="lg:w-1/2 xl:w-1/2 md:w-1/2 w-full xl:mx-20 lg:mx-20 md:mx-20 mx-auto mt-12 space-y-2"
+      class="lg:w-1/2 h-[500px] overflow-auto xl:w-1/2 md:w-1/2 w-full xl:mx-20 lg:mx-20 md:mx-20 mx-auto mt-12 space-y-2"
     >
       <div
         v-for="feedback in dataitem"
         :key="feedback.id"
-        class="w-full lg:max-w-[70%] xl:max-w-[70%] md:max-w-[70%] max-w-full p-4 bg-card rounded-md"
+        class="w-full lg:max-w-[70%] overflow-hidden xl:max-w-[70%] md:max-w-[70%] max-w-full p-4 bg-card rounded-md"
       >
         <div class="flex items-center space-x-3">
           <div
             class="w-10 h-10 border-2 rounded-full bg-isGray text-white bg-opacity-80 flex items-center justify-center"
           >
-            K
+            {{ feedback.userName[2] }}
           </div>
           <div class="leading-none">
             <h1 class="font-semibold text-sm text-isGray">
@@ -138,92 +136,104 @@
         </div>
       </div>
 
-      <div
-        data-te-modal-init
-        class="fixed left-0 top-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
-        id="exampleModal"
-        tabindex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div
-          data-te-modal-dialog-ref
-          class="pointer-events-none relative w-auto translate-y-[-50px] opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:max-w-[500px]"
-        >
-          <div
-            class="min-[576px]:shadow-[0_0.5rem_1rem_rgba(#000, 0.15)] pointer-events-auto relative flex w-full flex-col rounded-md border-none bg-white bg-clip-padding text-current shadow-lg outline-none dark:bg-card"
+      <TransitionRoot appear :show="isOpen" as="template">
+        <Dialog as="div" @close="closeModal" class="relative z-10">
+          <TransitionChild
+            as="template"
+            enter="duration-300 ease-out"
+            enter-from="opacity-0"
+            enter-to="opacity-100"
+            leave="duration-200 ease-in"
+            leave-from="opacity-100"
+            leave-to="opacity-0"
           >
+            <div class="fixed inset-0 bg-black/25" />
+          </TransitionChild>
+
+          <div class="fixed inset-0 overflow-y-auto">
             <div
-              class="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 border-opacity-100 p-4 dark:border-opacity-50"
+              class="flex min-h-full items-center justify-center p-4 text-center"
             >
-              <!--Close button-->
-              <button
-                type="button"
-                class="box-content rounded-none border-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
-                data-te-modal-dismiss
-                aria-label="Close"
+              <TransitionChild
+                as="template"
+                enter="duration-300 ease-out"
+                enter-from="opacity-0 scale-95"
+                enter-to="opacity-100 scale-100"
+                leave="duration-200 ease-in"
+                leave-from="opacity-100 scale-100"
+                leave-to="opacity-0 scale-95"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="h-6 w-6"
+                <DialogPanel
+                  class="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all"
                 >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-            </div>
-
-            <!--Modal body-->
-            <div class="relative flex-auto p-4" data-te-modal-body-ref>
-              <form @submit.prevent="handleFeedback" class="p-5 bg-card">
-                <div class="text-4xl font-semibold">
-                  <h1>Add Feedback</h1>
-                </div>
-                <div class="space-y-2">
-                  <label class="text-lg">Rating</label>
-                  <br />
-                  <input
-                    type="number"
-                    :value="Rating"
-                    @input="Rating = $event.target.value"
-                    required
-                    class="text-lg px-3 py-2 rounded-lg outline-none w-full"
-                    placeholder="Rating limit 5 points"
-                  />
-                </div>
-                <div class="space-y-2">
-                  <label class="text-lg">Comment</label>
-                  <br />
-                  <input
-                    type="text"
-                    :value="Comment"
-                    @input="Comment = $event.target.value"
-                    required
-                    class="text-lg px-3 py-2 rounded-lg outline-none w-full"
-                    placeholder="Comment"
-                  />
-                </div>
-
-                <div class="space-y-2 mt-4">
-                  <button
-                    type="submit"
-                    class="w-full py-2 bg-active text-white rounded-lg"
+                  <DialogTitle
+                    as="h3"
+                    class="text-lg font-medium leading-6 text-gray-900"
                   >
-                    Post
-                  </button>
-                </div>
-              </form>
+                    Add feedback
+                  </DialogTitle>
+                  <div class="mt-2">
+                    <form @submit.prevent="handleFeedback" class="p-5">
+                      <div class="space-y-2">
+                        <label class="text-lg">Rating</label>
+                        <br />
+                        <input
+                          type="number"
+                          :value="Rating"
+                          @input="Rating = $event.target.value"
+                          required
+                          class="text-lg px-3 py-2 rounded-lg outline-none w-full border-2 border-isGray"
+                          placeholder="Rating limit 5 points"
+                        />
+                      </div>
+                      <div class="space-y-2">
+                        <label class="text-lg">Comment</label>
+                        <br />
+                        <input
+                          type="text"
+                          :value="Comment"
+                          @input="Comment = $event.target.value"
+                          required
+                          class="text-lg px-3 py-2 rounded-lg outline-none w-full border-2 border-isGray"
+                          placeholder="Comment"
+                        />
+                      </div>
+
+                      <div class="space-y-2 mt-4">
+                        <button
+                          type="submit"
+                          class="w-full py-2 bg-active text-white rounded-lg"
+                        >
+                          Post
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+
+                  <div class="mt-4 absolute top-0 right-4">
+                    <button type="button" @click="closeModal">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-6 h-6"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M6 18 18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </DialogPanel>
+              </TransitionChild>
             </div>
           </div>
-        </div>
-      </div>
+        </Dialog>
+      </TransitionRoot>
     </div>
   </div>
 </template>
@@ -235,13 +245,33 @@ import { ref, onMounted } from "vue";
 import { timestamp } from "@/firebase/config";
 import getUser from "@/composible/getUser";
 import { getCollectionQuery } from "@/composible/getCollection";
-
+import {
+  TransitionRoot,
+  TransitionChild,
+  Dialog,
+  DialogPanel,
+  DialogTitle,
+} from "@headlessui/vue";
 export default {
+  components: {
+    TransitionRoot,
+    TransitionChild,
+    Dialog,
+    DialogPanel,
+    DialogTitle,
+  },
   setup() {
     onMounted(() => {
       getData();
       initTE({ Modal, Ripple });
     });
+    const isOpen = ref(false);
+    function closeModal() {
+      isOpen.value = false;
+    }
+    function openModal() {
+      isOpen.value = true;
+    }
     const dataitem = ref([]);
     const getData = async () => {
       try {
@@ -285,6 +315,7 @@ export default {
           // Reset fields after adding feedback
           Rating.value = null;
           Comment.value = "";
+          closeModal();
           // Optionally, close the modal or display a success message
         } catch (error) {
           console.error("Error adding feedback:", error.message);
@@ -293,24 +324,56 @@ export default {
         console.error("User is not logged in");
       }
     };
-    const isModalOpen = ref(false);
 
-    const openModal = () => {
-      isModalOpen.value = true;
-    };
-
-    const closeModal = () => {
-      isModalOpen.value = false;
-    };
     return {
       Rating,
       Comment,
       handleFeedback,
-      isModalOpen,
       openModal,
+      isOpen,
       closeModal,
       dataitem,
+      user,
     };
   },
 };
 </script>
+
+<!-- <form @submit.prevent="handleFeedback" class="p-5 bg-card">
+  <div class="text-4xl font-semibold">
+    <h1>Add Feedback</h1>
+  </div>
+  <div class="space-y-2">
+    <label class="text-lg">Rating</label>
+    <br />
+    <input
+      type="number"
+      :value="Rating"
+      @input="Rating = $event.target.value"
+      required
+      class="text-lg px-3 py-2 rounded-lg outline-none w-full"
+      placeholder="Rating limit 5 points"
+    />
+  </div>
+  <div class="space-y-2">
+    <label class="text-lg">Comment</label>
+    <br />
+    <input
+      type="text"
+      :value="Comment"
+      @input="Comment = $event.target.value"
+      required
+      class="text-lg px-3 py-2 rounded-lg outline-none w-full"
+      placeholder="Comment"
+    />
+  </div>
+
+  <div class="space-y-2 mt-4">
+    <button
+      type="submit"
+      class="w-full py-2 bg-active text-white rounded-lg"
+    >
+      Post
+    </button>
+  </div>
+</form> -->

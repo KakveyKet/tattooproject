@@ -146,11 +146,15 @@
       class="w-full h-[700px] overflow-auto"
     >
       <div
-        v-for="product in filteredAndSortedData"
+        v-for="(product, index) in filteredAndSortedData"
         :key="product.id"
         class="flex w-full text-black font-semibold justify-between p-4 bg-white border-b-2 border-black border-opacity-50"
       >
-        <div class="w-[20%] flex items-center h-[120px]">{{ product.id }}</div>
+        <div class="w-[20%] flex items-center h-[120px]">
+          <h1 class="ml-3">
+            {{ index + 1 }}
+          </h1>
+        </div>
         <div class="w-[20%] flex items-center h-[120px]">
           {{ product.name }}
         </div>
