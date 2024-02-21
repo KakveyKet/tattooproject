@@ -97,6 +97,50 @@
       </div>
     </div>
   </div>
+
+  <TransitionRoot appear :show="isOpen" as="template">
+    <Dialog as="div" @close="closeModal" class="relative z-10">
+      <TransitionChild
+        as="template"
+        enter="duration-300 ease-out"
+        enter-from="opacity-0"
+        enter-to="opacity-100"
+        leave="duration-200 ease-in"
+        leave-from="opacity-100"
+        leave-to="opacity-0"
+      >
+        <div class="fixed inset-0 bg-black/25" />
+      </TransitionChild>
+
+      <div class="fixed inset-0 overflow-y-auto">
+        <div
+          class="flex min-h-full items-center justify-center p-4 text-center"
+        >
+          <TransitionChild
+            as="template"
+            enter="duration-300 ease-out"
+            enter-from="opacity-0 scale-95"
+            enter-to="opacity-100 scale-100"
+            leave="duration-200 ease-in"
+            leave-from="opacity-100 scale-100"
+            leave-to="opacity-0 scale-95"
+          >
+            <DialogPanel
+              class="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all"
+            >
+              <DialogTitle
+                as="h3"
+                class="text-lg font-medium leading-6 text-center text-gray-900"
+              >
+                Product Added
+              </DialogTitle>
+              <div class="mt-2"></div>
+            </DialogPanel>
+          </TransitionChild>
+        </div>
+      </div>
+    </Dialog>
+  </TransitionRoot>
 </template>
 
 <script>
@@ -105,9 +149,22 @@ import useCollection from "../composible/useCollection";
 import useStorage from "../composible/useStorange";
 import { useRouter } from "vue-router";
 import { useRoute } from "vue-router";
-
+import {
+  TransitionRoot,
+  TransitionChild,
+  Dialog,
+  DialogPanel,
+  DialogTitle,
+} from "@headlessui/vue";
 import getDataByid from "../composible/getCollectionbyid";
 export default {
+  components: {
+    TransitionRoot,
+    TransitionChild,
+    Dialog,
+    DialogPanel,
+    DialogTitle,
+  },
   props: ["id"],
   setup() {
     const { addDocs, removeDoc, updateDocs } = useCollection("products");
@@ -122,6 +179,13 @@ export default {
     const isActive = ref("");
     const img = ref(null);
     const router = useRouter();
+    const isOpen = ref(false);
+    function closeModal() {
+      isOpen.value = false;
+    }
+    function openModal() {
+      isOpen.value = true;
+    }
     const handleFileChange = (event) => {
       const file = event.target.files[0];
       if (!file) {
@@ -157,16 +221,20 @@ export default {
           type: selectedType.value,
           description: descriptions.value,
           status: isActive.value,
-          image: imageURL, // Store the URL or reference to the uploaded image
+          image: imageURL,
         };
+        setTimeout(() => {
+          isOpen.value = true;
+          setTimeout(() => {
+            isOpen.value = false;
+          }, 1000);
+        }, 1000);
 
         if (route.query.id) {
           await updateDocs(route.query.id, productData);
         } else {
           await addDocs(productData);
         }
-
-        // Reset form fields after adding/updating product
         productName.value = "";
         selectedType.value = null;
         descriptions.value = "";
@@ -206,6 +274,9 @@ export default {
       handleFileChange,
       addProduct,
       router,
+      closeModal,
+      openModal,
+      isOpen,
     };
   },
 };

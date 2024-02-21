@@ -64,45 +64,75 @@
           Sign In
         </button>
       </div>
-      <div
-        v-else
-        data-te-dropdown-ref
-        class="w-10 rounded-full flex items-center justify-center h-10 bg-isGray bg-opacity-50 text-white border relative"
+
+      <Menu v-else as="div" class="relative inline-block text-left">
+        <div class="w-10 h-10 flex items-center justify-center">
+          <MenuButton
+            class="inline-flex w-full h-full items-center border-card border-2 rounded-full justify-center bg-black/20 text-sm font-medium text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"
+          >
+            {{ user?.displayName[0] }}
+          </MenuButton>
+        </div>
+
+        <transition
+          enter-active-class="transition duration-100 ease-out"
+          enter-from-class="transform scale-95 opacity-0"
+          enter-to-class="transform scale-100 opacity-100"
+          leave-active-class="transition duration-75 ease-in"
+          leave-from-class="transform scale-100 opacity-100"
+          leave-to-class="transform scale-95 opacity-0"
+        >
+          <MenuItems
+            class="absolute right-0 mt-2 w-32 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none"
+          >
+            <div class="px-1 py-1">
+              <MenuItem @click="handleSignOut" v-slot="{ active }">
+                <button
+                  :class="[
+                    active ? 'bg-isGray text-card' : 'text-isGray',
+                    'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+                  ]"
+                >
+                  Log Out
+                </button>
+              </MenuItem>
+              <MenuItem v-slot="{ active }">
+                <button
+                  :class="[
+                    active ? 'bg-isGray text-card' : 'text-isGray',
+                    'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+                  ]"
+                >
+                  Setting
+                </button>
+              </MenuItem>
+            </div>
+          </MenuItems>
+        </transition>
+      </Menu>
+      <ul
+        class="absolute z-[100] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
+        aria-labelledby="dropdownMenuButton1"
+        data-te-dropdown-menu-ref
       >
-        <button
-          id="dropdownMenuButton1"
-          data-te-dropdown-toggle-ref
-          aria-expanded="false"
-          data-te-ripple-init
-          data-te-ripple-color="light"
-          class="uppercase w-8 h-8"
-        >
-          {{ user?.displayName[0] }}
-        </button>
-        <ul
-          class="absolute z-[100] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
-          aria-labelledby="dropdownMenuButton1"
-          data-te-dropdown-menu-ref
-        >
-          <li>
-            <a
-              class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
-              href="#"
-              data-te-dropdown-item-ref
-              >Profile</a
-            >
-          </li>
-          <li>
-            <a
-              @click="handleSignOut"
-              class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
-              href="#"
-              data-te-dropdown-item-ref
-              >Log out</a
-            >
-          </li>
-        </ul>
-      </div>
+        <li>
+          <a
+            class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+            href="#"
+            data-te-dropdown-item-ref
+            >Profile</a
+          >
+        </li>
+        <li>
+          <a
+            @click="handleSignOut"
+            class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+            href="#"
+            data-te-dropdown-item-ref
+            >Log out</a
+          >
+        </li>
+      </ul>
     </div>
   </div>
   <!-- sm -->
@@ -212,12 +242,19 @@
 </template>
 
 <script>
+import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 import { projectAuth } from "../firebase/config";
 import { Dropdown, Ripple, initTE } from "tw-elements";
 import getUser from "../composible/getUser";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
 export default {
+  components: {
+    Menu,
+    MenuButton,
+    MenuItems,
+    MenuItem,
+  },
   setup() {
     onMounted(() => {
       initTE({ Dropdown, Ripple });

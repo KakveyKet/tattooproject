@@ -177,7 +177,10 @@
         <div class="w-[20%] flex items-center">{{ user.workingtime }}</div>
 
         <div class="w-[20%] flex items-center space-x-2">
-          <button class="bg-view p-1 rounded bg-opacity-50">
+          <router-link
+            :to="{ name: 'artistdetail', params: { id: user.id } }"
+            class="bg-view p-1 rounded bg-opacity-50"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -191,7 +194,7 @@
                 clip-rule="evenodd"
               />
             </svg>
-          </button>
+          </router-link>
           <button
             @click="handleEdit(user.id)"
             class="bg-active p-1 rounded bg-opacity-50"
@@ -210,7 +213,10 @@
               />
             </svg>
           </button>
-          <button class="bg-delete p-1 rounded bg-opacity-50">
+          <button
+            @click="openModal(user.id)"
+            class="bg-delete p-1 rounded bg-opacity-50"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -225,6 +231,64 @@
             </svg>
           </button>
         </div>
+        <TransitionRoot appear :show="isOpen" as="template">
+          <Dialog as="div" @close="closeModal" class="relative z-10">
+            <TransitionChild
+              as="template"
+              enter="duration-300 ease-out"
+              enter-from="opacity-0"
+              enter-to="opacity-100"
+              leave="duration-200 ease-in"
+              leave-from="opacity-100"
+              leave-to="opacity-0"
+            >
+              <div class="fixed inset-0 bg-black/25" />
+            </TransitionChild>
+
+            <div class="fixed inset-0 overflow-y-auto">
+              <div
+                class="flex min-h-full items-center justify-center p-4 text-center"
+              >
+                <TransitionChild
+                  as="template"
+                  enter="duration-300 ease-out"
+                  enter-from="opacity-0 scale-95"
+                  enter-to="opacity-100 scale-100"
+                  leave="duration-200 ease-in"
+                  leave-from="opacity-100 scale-100"
+                  leave-to="opacity-0 scale-95"
+                >
+                  <DialogPanel
+                    class="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all"
+                  >
+                    <DialogTitle
+                      as="h3"
+                      class="text-lg font-medium leading-6 text-center text-gray-900"
+                    >
+                      Are you sure to delete this user ?
+                    </DialogTitle>
+                    <div
+                      class="mt-5 w-[100%] flex justify-center text-white space-x-2"
+                    >
+                      <button
+                        @click="closeModal"
+                        class="px-3 py-2 bg-yellow-500 rounded-md"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        @click="deleteProduct"
+                        class="px-3 py-2 bg-red-500 rounded-md"
+                      >
+                        Yes
+                      </button>
+                    </div>
+                  </DialogPanel>
+                </TransitionChild>
+              </div>
+            </div>
+          </Dialog>
+        </TransitionRoot>
       </div>
     </div>
     <div v-else class="w-full h-[700px] flex items-center justify-center">
@@ -303,12 +367,27 @@ import { useRouter } from "vue-router";
 import { getCollectionQuery } from "@/composible/getCollection";
 import { ref, onMounted, computed } from "vue";
 import { Dropdown, Ripple, initTE } from "tw-elements";
-
+import useCollection from "@/composible/useCollection";
+import {
+  TransitionRoot,
+  TransitionChild,
+  Dialog,
+  DialogPanel,
+  DialogTitle,
+} from "@headlessui/vue";
 export default {
+  components: {
+    TransitionRoot,
+    TransitionChild,
+    Dialog,
+    DialogPanel,
+    DialogTitle,
+  },
   setup() {
     const dataitem = ref([]);
     const searchQuery = ref("");
     const sortBy = ref(null);
+    const { addDocs, removeDoc, updateDocs } = useCollection("artists");
 
     onMounted(async () => {
       await getData();
@@ -329,7 +408,14 @@ export default {
         console.error("Error fetching data:", error.message);
       }
     };
-
+    const isOpen = ref(false);
+    function closeModal() {
+      isOpen.value = false;
+    }
+    function openModal(id) {
+      productId.value = id;
+      isOpen.value = true;
+    }
     const filteredAndSortedData = computed(() => {
       let filteredData = dataitem.value.filter((artist) => {
         return artist.name
@@ -370,13 +456,33 @@ export default {
         query: { id: id },
       });
     };
-
+    const productId = ref(null);
+    const deleteProduct = async () => {
+      try {
+        if (!productId.value) {
+          console.error("Product ID is required.");
+          return;
+        }
+        await removeDoc(productId.value);
+        closeModal();
+        console.log(productId.value);
+        productId.value = "";
+        console.log("Product deleted successfully");
+      } catch (error) {
+        console.error("Error deleting product:", error);
+      }
+    };
     return {
+      productId,
       handleEdit,
       dataitem,
       filteredAndSortedData,
       handleSort,
       searchQuery,
+      isOpen,
+      closeModal,
+      openModal,
+      deleteProduct,
     };
   },
 };

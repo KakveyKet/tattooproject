@@ -334,14 +334,12 @@ export default {
           .includes(searchQuery.value.toLowerCase());
       });
 
-      if (sortBy.value === "active" || sortBy.value === "inactive") {
+      if (sortBy.value === "Done" || sortBy.value === "Prending") {
         filteredData = filteredData.filter(
           (product) => product.status === sortBy.value
         );
       } else if (
-        sortBy.value === "Tattoo" ||
-        sortBy.value === "Piercing" ||
-        sortBy.value === "Tattoo Removal"
+        ["Tattoo", "Piercing", "Tattoo Removal"].includes(sortBy.value)
       ) {
         filteredData = filteredData.filter(
           (product) => product.type === sortBy.value

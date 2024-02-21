@@ -1,9 +1,7 @@
-<!-- ProductDetails.vue -->
-
 <template>
   <div class="flex w-full bg-card h-screen items-center justify-center">
     <div class="bg-white p-5 rounded-md w-1/2">
-      <div v-if="product" class="w-full space-y-2">
+      <div v-if="product" class="w-[70%] space-y-2">
         <div class="w-full flex items-center justify-center space-x-4">
           <div class="w-1/2">
             <h1 class="text-xl font-semibold text-isGray text-start">Name :</h1>
@@ -12,13 +10,14 @@
             <h1 class="mt-1">{{ product.name }}</h1>
           </div>
         </div>
-
         <div class="w-full flex items-center justify-center space-x-4">
           <div class="w-1/2">
-            <h1 class="text-xl font-semibold text-isGray text-start">Type :</h1>
+            <h1 class="text-xl font-semibold text-isGray text-start">
+              Status :
+            </h1>
           </div>
           <div class="w-1/2">
-            <h1 class="mt-1">{{ product.type }}</h1>
+            <h1 class="mt-1">{{ product.statuse }}</h1>
           </div>
         </div>
         <div class="w-full flex items-center justify-center space-x-4">
@@ -38,7 +37,27 @@
             </h1>
           </div>
           <div class="w-1/2">
-            <h1 class="mt-1">{{ product.description }}</h1>
+            <h1 class="mt-1">{{ product.bio }}</h1>
+          </div>
+        </div>
+        <div class="w-full flex items-center justify-center space-x-4">
+          <div class="w-1/2">
+            <h1 class="text-xl font-semibold text-isGray text-start">
+              WorkingDay :
+            </h1>
+          </div>
+          <div class="w-1/2">
+            <h1 class="mt-1">{{ product.workingday }}</h1>
+          </div>
+        </div>
+        <div class="w-full flex items-center justify-center space-x-4">
+          <div class="w-1/2">
+            <h1 class="text-xl font-semibold text-isGray text-start">
+              Workingtime :
+            </h1>
+          </div>
+          <div class="w-1/2">
+            <h1 class="mt-1">{{ product.workingtime }}</h1>
           </div>
         </div>
       </div>
@@ -53,14 +72,13 @@ import { doc, onSnapshot } from "firebase/firestore";
 
 export default {
   data() {
-    www;
     return {
       product: null,
     };
   },
   beforeRouteEnter(to, from, next) {
     const productId = to.params.id;
-    const productRef = doc(projectFirestore, "products", productId);
+    const productRef = doc(projectFirestore, "artists", productId);
     const product = ref(null);
 
     const unsubscribe = onSnapshot(productRef, (snapshot) => {

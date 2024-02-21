@@ -25,9 +25,11 @@ import LoginVue from '@/views/Login.vue';
 import SiginUpVue from '@/views/SiginUp.vue';
 import AdminLoginVue from '@/views/AdminLogin.vue';
 import ReportVue from '@/views/Report.vue';
+import ArtistDetailsVue from '@/views/ArtistDetails.vue';
+import BookingDetailsVue from '@/views/BookingDetails.vue';
+import PrintInvoiceVue from '@/views/PrintInvoice.vue';
 const routes = [
   {
-
     path: '/',
     name: 'usertest',
     component: UserTestVue,
@@ -112,6 +114,24 @@ const routes = [
     path: "/products/:id",
     name: "productdetail",
     component: ProductDeatilVue,
+    props: true
+  },
+  {
+    path: "/artist/:id",
+    name: "artistdetail",
+    component: ArtistDetailsVue,
+    props: true
+  },
+  {
+    path: '/booking/:id',
+    name: 'bookingdetail',
+    component: BookingDetailsVue,
+    props: true
+  },
+  {
+    path: '/report/:id',
+    name: 'reportdetail',
+    component: PrintInvoiceVue,
     props: true
   },
   {
