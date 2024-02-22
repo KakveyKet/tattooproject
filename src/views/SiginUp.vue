@@ -1,4 +1,7 @@
 <template>
+  <div>
+    <MenuBarVue />
+  </div>
   <div class="flex w-full h-screen items-center justify-center p-2">
     <form
       @submit.prevent="handleSigUp"
@@ -63,6 +66,9 @@
       </div>
     </form>
   </div>
+  <div>
+    <Footer />
+  </div>
 </template>
 
 <script>
@@ -70,7 +76,13 @@ import { ref } from "vue";
 import useCollection from "@/composible/useCollection";
 import useSignUp from "@/composible/Signup";
 import { useRouter } from "vue-router";
+import MenuBarVue from "../client/MenuBar.vue";
+import Footer from "@/client/Footer.vue";
 export default {
+  components: {
+    MenuBarVue,
+    Footer,
+  },
   setup() {
     const username = ref("");
     const email = ref("");

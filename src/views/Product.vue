@@ -110,8 +110,8 @@
           </ul>
         </div>
         <div>
-          <router-link
-            to="/addproducts"
+          <button
+            @click="isAddProduct"
             class="px-4 h-8 shadow rounded-lg bg-primary1 text-white flex items-center justify-center"
           >
             <span
@@ -127,7 +127,7 @@
                 <path fill="none" d="M24 17h-7v7h-2v-7H8v-2h7V8h2v7h7z" /></svg
             ></span>
             Add
-          </router-link>
+          </button>
         </div>
       </div>
     </div>
@@ -201,7 +201,7 @@
             </svg>
           </router-link>
           <button
-            @click="handleEdit(product.id)"
+            @click="handleAddEditData(product)"
             class="bg-active p-1 rounded bg-opacity-50"
           >
             <svg
@@ -271,21 +271,42 @@
       </div>
     </div>
   </div>
+  <component
+    :is="currentCommponent"
+    @close="handleClose"
+    :datatedit="datatedit"
+  />
 </template>
 
 <script>
+import AddProductVue from "./AddProduct.vue";
 import { Dropdown, Ripple, initTE } from "tw-elements";
 import { onMounted, ref, computed } from "vue";
 import useCollection from "../composible/useCollection";
-import useStorage from "../composible/useStorange";
 import { getCollectionQuery } from "../composible/getCollection";
-import { useRouter } from "vue-router";
 export default {
+  components: {
+    AddProductVue,
+  },
+
   setup() {
-    const { addDocs, removeDoc, updateDocs } = useCollection("products");
-
-    const { uploadImage } = useStorage();
-
+    const { addDocs, removeDoc } = useCollection("products");
+    const currentCommponent = ref("");
+    const isOpen = ref(false);
+    function closeModal() {
+      isOpen.value = false;
+    }
+    const datatedit = ref(null);
+    const handleAddEditData = (item) => {
+      currentCommponent.value = "AddProductVue";
+      datatedit.value = item;
+      console.log("====================================");
+      console.log(datatedit.value);
+      console.log("====================================");
+    };
+    function openModal() {
+      isOpen.value = true;
+    }
     const getData = async () => {
       try {
         await getCollectionQuery(
@@ -305,7 +326,6 @@ export default {
       getData();
       initTE({ Dropdown, Ripple });
     });
-    const router = useRouter();
     const isAddProductOpen = ref(true);
     const isDeleteOpen = ref(true);
     const productId = ref(null);
@@ -313,18 +333,8 @@ export default {
       productId.value = id;
       isDeleteOpen.value = !isAddProductOpen.value;
     };
-
-    const toggleAddProduct = () => {
-      isAddProductOpen.value = !isAddProductOpen.value;
-    };
     const dataitem = ref([]);
-    const productName = ref("");
-    const selectedType = ref(null);
-    const descriptions = ref("");
-    const types = ref(["Tattoo", "Piercing", "Tattoo Removal"]);
-    const statuses = ref(["active", "inactive"]);
-    const isActive = ref(null);
-    const img = ref(null);
+
     const searchQuery = ref("");
     const sortBy = ref(null);
     const filteredAndSortedData = computed(() => {
@@ -353,59 +363,6 @@ export default {
       sortBy.value = sortValue;
     };
 
-    const handleFileChange = (event) => {
-      const file = event.target.files[0];
-      if (!file) {
-        console.error("No file selected.");
-        return;
-      }
-
-      const allowedExtensions = ["jpg", "png", "svg", "jpeg"];
-      const extension = file.name.split(".").pop().toLowerCase();
-
-      if (!allowedExtensions.includes(extension)) {
-        console.error("Only jpg, png, svg, and jpeg files are allowed.");
-        return;
-      }
-
-      img.value = file;
-    };
-
-    const addProduct = async () => {
-      try {
-        if (img.value && img.value.size > 1024 * 1024) {
-          console.error("Image size exceeds 1MB limit.");
-          return;
-        }
-
-        const storagePath = `products/${img.value.name}`;
-        const imageURL = await uploadImage(storagePath, img.value);
-        const productData = {
-          name: productName.value,
-          type: selectedType.value,
-          description: descriptions.value,
-          status: isActive.value,
-          image: imageURL,
-        };
-
-        if (productId.value) {
-          await updateProduct(productId.value, productData);
-        } else {
-          await addDocs(productData);
-        }
-        productName.value = "";
-        selectedType.value = null;
-        descriptions.value = "";
-        isActive.value = null;
-        img.value = null;
-
-        console.log("Product operation successful");
-        isAddProductOpen.value = !isAddProductOpen.value;
-      } catch (error) {
-        console.error("Error performing product operation:", error);
-      }
-    };
-
     const deleteProduct = async () => {
       try {
         if (!productId.value) {
@@ -422,35 +379,30 @@ export default {
       }
     };
 
-    const handleEdit = (id) => {
-      router.push({
-        name: "addproducts",
-        params: { id: id },
-        query: { id: id },
-      });
+    const isAddProduct = () => {
+      currentCommponent.value = "AddProductVue";
+    };
+    const handleClose = () => {
+      currentCommponent.value = "";
     };
     return {
-      productName,
-      selectedType,
-      descriptions,
-      types,
-      statuses,
-      isActive,
-      img,
-      handleFileChange,
-      addProduct,
-      toggleAddProduct,
-      isAddProductOpen,
       dataitem,
       getData,
       isDeleteOpen,
       toggleDelete,
       productId,
       deleteProduct,
-      handleEdit,
       searchQuery,
       filteredAndSortedData,
       handleSort,
+      isOpen,
+      closeModal,
+      openModal,
+      currentCommponent,
+      isAddProduct,
+      handleClose,
+      handleAddEditData,
+      datatedit,
     };
   },
 };

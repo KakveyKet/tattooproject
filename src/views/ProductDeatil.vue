@@ -53,7 +53,6 @@ import { doc, onSnapshot } from "firebase/firestore";
 
 export default {
   data() {
-    www;
     return {
       product: null,
     };

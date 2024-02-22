@@ -11,6 +11,7 @@
           class="outline-none w-full bg-transparent px-4"
           type="text"
           placeholder="Search"
+          v-model="searchQuery"
         />
         <span class="absolute top-1 right-2">
           <svg
@@ -44,10 +45,11 @@
       </h1>
     </div>
     <div
+      v-if="filteredData.length > 0"
       class="w-full h-auto grid grid-cols-2 lg:grid-cols-6 xl:grid-cols-6 md:grid-cols-5 lg:gap-3 xl:gap-3 gap-1"
     >
       <div
-        v-for="cart in dataitem"
+        v-for="cart in filteredData"
         :key="cart.id"
         :style="{ backgroundImage: `url('${cart.image}')` }"
         class="bg-cover w-[90%] xl:w-[300px] h-[200px] lg:h-96 relative m-2"
@@ -72,7 +74,12 @@
         </button>
       </div>
     </div>
-
+    <div
+      v-else
+      class="text-xl my-5 text-red-500 border-2 border-dashed py-4 font-bold text-center lg:w-[1040px] xl:w-[1040px] md:w-[1040px] mx-auto"
+    >
+      Prouct is empty!
+    </div>
     <!-- minose < 18 -->
     <div class="w-full lg:w-1/2 xl:h-2/3 md:w-1/2 mx-auto mt-3">
       <div
@@ -113,12 +120,16 @@
 <script>
 import ServiceHigthlightVue from "./ServiceHigthlight.vue";
 import { getCollectionQuery } from "../composible/getCollection";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
+
 export default {
   components: {
     ServiceHigthlightVue,
   },
   setup() {
+    const dataitem = ref([]);
+    const searchQuery = ref("");
+
     const getData = async () => {
       try {
         await getCollectionQuery(
@@ -133,15 +144,24 @@ export default {
         return error.message;
       }
     };
-    const dataitem = ref([]);
+
     onMounted(() => {
       getData();
     });
+
+    const filteredData = computed(() => {
+      const query = searchQuery.value.toLowerCase();
+      return dataitem.value.filter((item) => {
+        // Adjust the fields you want to search in
+        return item.name.toLowerCase().includes(query);
+      });
+    });
+
     return {
       dataitem,
+      searchQuery,
+      filteredData,
     };
   },
 };
 </script>
-
-<style lang="scss" scoped></style>

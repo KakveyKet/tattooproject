@@ -9,7 +9,7 @@
           <input
             class="w-[80%] px-3 h-full placeholder:text-sm bg-transparent outline-none"
             type="text"
-            placeholder="Search..."
+            placeholder="Search client name..."
             v-model="searchQuery"
           />
           <span class="mr-2"
@@ -66,77 +66,45 @@
             aria-labelledby="dropdownMenuButton1"
             data-te-dropdown-menu-ref
           >
-            <li @click="handleSort('Tattoo')">
+            <li @click="handleSortByType('Tattoo')">
               <a
                 class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
                 data-te-dropdown-item-ref
                 >Tattoo</a
               >
             </li>
-            <li @click="handleSort('Piercing ')">
+            <li @click="handleSortByType('Piercing ')">
               <a
                 class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
                 data-te-dropdown-item-ref
                 >Piercing</a
               >
             </li>
-            <li @click="handleSort('Tattoo Removal ')">
+            <li @click="handleSortByType('Tattoo Removal ')">
               <a
                 class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
                 data-te-dropdown-item-ref
                 >Tattoo Removal</a
               >
             </li>
+            <li @click="handleSort('February')">
+              <a
+                class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                >February</a
+              >
+            </li>
+            <li @click="handleSort('January')">
+              <a
+                class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                >January</a
+              >
+            </li>
           </ul>
         </div>
-      </div>
-    </div>
-    <div
-      class="flex w-full mt-7 rounded-t text-black font-semibold border-b-2 border-black border-opacity-50 justify-between p-4 bg-isGray2 bg-opacity-50"
-    >
-      <div class="w-[20%]">No.</div>
-      <div class="w-[20%]">Booking At</div>
-      <div class="w-[20%]">Client Name</div>
-      <div class="w-[20%]">Image</div>
-      <div class="w-[20%]">Details</div>
-      <div class="w-[20%]">Actions</div>
-    </div>
-    <div
-      v-if="filteredAndSortedData.length > 0"
-      class="w-full h-[650px] overflow-auto"
-    >
-      <div
-        v-for="(booking, index) in filteredAndSortedData"
-        :key="booking.id"
-        class="flex w-full overflow-hidden text-black font-semibold justify-between p-2 bg-white border-b-2 border-black border-opacity-50"
-      >
-        <div class="w-[20%] flex items-center">
-          <h1 class="ml-4">
-            {{ index + 1 }}
-          </h1>
-        </div>
-        <div class="w-[20%] flex items-center tracking-wider">
-          {{ new Date(booking.datetime.seconds * 1000).toLocaleString() }}
-        </div>
-        <div class="w-[20%] flex items-center">
-          {{ booking.firstname }} {{ booking.lastname }}
-        </div>
-        <div v-if="booking.img" class="w-[20%] h-[120px]">
-          <img
-            :src="booking.img"
-            class="w-[50%] h-full object-cover rounded-lg"
-          />
-        </div>
-        <div v-else class="w-[20%] h-[120px] flex items-center ml-3">
-          <h1>Don't Have Image</h1>
-        </div>
-
-        <div class="w-[20%] flex items-center">{{ booking.option }}</div>
-
-        <div class="w-[20%] flex items-center space-x-2 mr-5 text-white">
-          <router-link
-            :to="{ name: 'reportdetail', params: { id: booking.id } }"
-            class="bg-blue-600 hover:bg-blue-700 duration-300 active:bg-blue-800 px-2 py-1 rounded"
+        <div>
+          <button
+            @click="handlePrint"
+            class="px-2 h-8 shadow rounded-lg flex justify-start items-center"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -150,13 +118,79 @@
                 clip-rule="evenodd"
               />
             </svg>
-          </router-link>
+          </button>
         </div>
       </div>
     </div>
-    <div v-else class="w-full h-[700px] flex items-center justify-center">
-      <div class="w-[200px] p-5">
-        <h1>Not Found</h1>
+
+    <div id="print-invoice">
+      <div
+        class="flex w-full mt-7 rounded-t text-black font-semibold border-b-2 border-black border-opacity-50 justify-between p-4 bg-isGray2 bg-opacity-50"
+      >
+        <div class="w-[20%]">No.</div>
+        <div class="w-[20%]">Booking At</div>
+        <div class="w-[20%]">Client Name</div>
+        <div class="w-[20%]">Image</div>
+        <div class="w-[20%]">Details</div>
+        <div class="w-[20%]">Actions</div>
+      </div>
+      <div
+        v-if="filteredAndSortedData.length > 0"
+        class="w-full h-[650px] overflow-auto"
+      >
+        <div
+          v-for="(booking, index) in filteredAndSortedData"
+          :key="booking.id"
+          class="flex w-full overflow-hidden text-black font-semibold justify-between p-2 bg-white border-b-2 border-black border-opacity-50"
+        >
+          <div class="w-[20%] flex items-center">
+            <h1 class="ml-4">
+              {{ index + 1 }}
+            </h1>
+          </div>
+          <div class="w-[20%] flex items-center tracking-wider">
+            {{ new Date(booking.datetime.seconds * 1000).toLocaleString() }}
+          </div>
+          <div class="w-[20%] flex items-center">
+            {{ booking.firstname }} {{ booking.lastname }}
+          </div>
+          <div v-if="booking.img" class="w-[20%] h-[120px]">
+            <img
+              :src="booking.img"
+              class="w-[50%] h-full object-cover rounded-lg"
+            />
+          </div>
+          <div v-else class="w-[20%] h-[120px] flex items-center ml-3">
+            <h1>Don't Have Image</h1>
+          </div>
+
+          <div class="w-[20%] flex items-center">{{ booking.option }}</div>
+
+          <div class="w-[20%] flex items-center space-x-2 mr-5 text-white">
+            <router-link
+              :to="{ name: 'reportdetail', params: { id: booking.id } }"
+              class="bg-blue-600 hover:bg-blue-700 duration-300 active:bg-blue-800 px-2 py-1 rounded"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="w-6 h-6"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M7.875 1.5C6.839 1.5 6 2.34 6 3.375v2.99c-.426.053-.851.11-1.274.174-1.454.218-2.476 1.483-2.476 2.917v6.294a3 3 0 0 0 3 3h.27l-.155 1.705A1.875 1.875 0 0 0 7.232 22.5h9.536a1.875 1.875 0 0 0 1.867-2.045l-.155-1.705h.27a3 3 0 0 0 3-3V9.456c0-1.434-1.022-2.7-2.476-2.917A48.716 48.716 0 0 0 18 6.366V3.375c0-1.036-.84-1.875-1.875-1.875h-8.25ZM16.5 6.205v-2.83A.375.375 0 0 0 16.125 3h-8.25a.375.375 0 0 0-.375.375v2.83a49.353 49.353 0 0 1 9 0Zm-.217 8.265c.178.018.317.16.333.337l.526 5.784a.375.375 0 0 1-.374.409H7.232a.375.375 0 0 1-.374-.409l.526-5.784a.373.373 0 0 1 .333-.337 41.741 41.741 0 0 1 8.566 0Zm.967-3.97a.75.75 0 0 1 .75-.75h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75H18a.75.75 0 0 1-.75-.75V10.5ZM15 9.75a.75.75 0 0 0-.75.75v.008c0 .414.336.75.75.75h.008a.75.75 0 0 0 .75-.75V10.5a.75.75 0 0 0-.75-.75H15Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </router-link>
+          </div>
+        </div>
+      </div>
+      <div v-else class="w-full h-[700px] flex items-center justify-center">
+        <div class="w-[200px] p-5">
+          <h1>Not Found</h1>
+        </div>
       </div>
     </div>
   </div>
@@ -168,6 +202,7 @@ import { getCollectionQuery } from "../composible/getCollection"; // Assuming yo
 import { collection, doc, updateDoc } from "firebase/firestore";
 import { projectFirestore } from "@/firebase/config";
 import { Dropdown, Ripple, initTE } from "tw-elements";
+import printJS from "print-js";
 export default {
   setup() {
     onMounted(() => {
@@ -189,8 +224,8 @@ export default {
     };
     const dataitem = ref([]);
     const searchQuery = ref("");
-    const sortBy = ref(null);
-
+    const sortByMonth = ref(null);
+    const sortByType = ref(null);
     const filteredAndSortedData = computed(() => {
       return filterData();
     });
@@ -205,18 +240,39 @@ export default {
           .toLowerCase()
           .includes(searchQuery.value.toLowerCase());
       });
-
-      if (sortBy.value !== null) {
+      if (sortByType.value !== null) {
         filteredData = filteredData.filter(
-          (product) => product.option === sortBy.value
+          (product) => product.option === sortByType.value
         );
       }
-
+      if (sortByMonth.value !== null && sortByMonth.value !== "") {
+        filteredData = filteredData.filter((product) => {
+          const date = new Date(product.datetime.seconds * 1000);
+          const monthNames = [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+          ];
+          const selectedMonth = sortByMonth.value;
+          return monthNames[date.getMonth()] === selectedMonth;
+        });
+      }
       return filteredData;
     }
-
     const handleSort = (sortValue) => {
-      sortBy.value = sortValue;
+      sortByMonth.value = sortValue;
+    };
+    const handleSortByType = (sortType) => {
+      sortByType.value = sortType;
     };
 
     const toggleStatus = async (id) => {
@@ -235,7 +291,15 @@ export default {
       const docRef = doc(projectFirestore, "bookings", id);
       await updateDoc(docRef, { status });
     };
+    ``;
 
+    const handlePrint = () => {
+      printJS({
+        printable: "print-invoice",
+        type: "html",
+        targetStyles: ["*"],
+      });
+    };
     onMounted(() => {
       getData();
     });
@@ -248,6 +312,8 @@ export default {
       searchQuery,
       filterData,
       handleSort,
+      handleSortByType,
+      handlePrint,
     };
   },
 };

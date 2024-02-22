@@ -1,123 +1,102 @@
 <template>
-  <div class="w-full h-full">
-    <div
-      class="duration-300 w-full h-screen p-5 flex items-center justify-center"
-    >
-      <div class="p-3 w-[60%] bg-isGray2 mx-auto space-y-3 rounded-md">
-        <div class="w-full space-y-2">
-          <h1 class="text-2xl font-semibold text-black">
-            {{ artistsName ? "Update Artist" : "Add Artist" }}
-          </h1>
-          <router-link
-            to="/artist"
-            class="text-xl border-2 w-[150px] border-black rounded-lg px-3 flex items-center justify-center space-x-2"
-          >
-            <span class="mr-2"
-              ><svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-5 h-5"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
-                />
-              </svg>
-            </span>
-            Go Back
-          </router-link>
-        </div>
-
-        <form
-          @submit.prevent="addProduct"
-          class="w-full bg-white rounded-md p-3 space-y-6"
+  <div
+    class="duration-300 w-full h-screen fixed top-0 bg-black bg-opacity-60 right-0 flex items-center justify-center"
+  >
+    <div class="p-3 w-1/2 bg-white mx-auto space-y-3 rounded-md">
+      <button
+        @click="handleClose"
+        class="w-5 h-5 bg-red-400 rounded-full text-white flex items-center justify-center"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-6 h-6"
         >
-          <div class="flex justify-start space-x-5 items-center ml-12">
-            <label class="text-2xl font-semibold text-black"> Name </label>
-            <input
-              class="px-4 py-2 outline-none rounded-lg border-2 border-black"
-              type="text"
-              v-model="artistsName"
-              placeholder="Name..."
-            />
-          </div>
-          <div class="flex justify-start space-x-9 items-center ml-12">
-            <label class="text-2xl font-semibold text-black">
-              WorkingDay
-            </label>
-            <select
-              v-model="WorkingDay"
-              class="px-4 py-2 outline-none rounded-lg border-2 border-black"
-            >
-              <option
-                v-for="type in WorkingDayStatus"
-                :key="type"
-                :value="type"
-              >
-                {{ type }}
-              </option>
-            </select>
-          </div>
-          <div class="flex justify-start space-x-9 items-center ml-12">
-            <label class="text-2xl font-semibold text-black">
-              Working Time
-            </label>
-            <select
-              v-model="WorkingTime"
-              class="px-4 py-2 outline-none rounded-lg border-2 border-black"
-            >
-              <option
-                v-for="type in WorkingTimeStatus"
-                :key="type"
-                :value="type"
-              >
-                {{ type }}
-              </option>
-            </select>
-          </div>
-          <div class="flex justify-start space-x-5 items-center ml-12">
-            <label class="text-2xl font-semibold text-black"> Image </label>
-            <input
-              type="file"
-              @change="handleFileChange"
-              class="px-4 py-2 outline-none rounded-lg border-2 border-black"
-            />
-          </div>
-          <div class="flex justify-start space-x-9 items-center ml-12">
-            <label class="text-2xl font-semibold text-black"> Status </label>
-            <select
-              v-model="isActive"
-              class="px-4 py-2 outline-none rounded-lg border-2 border-black"
-            >
-              <option v-for="actives in statuses" :key="actives">
-                {{ actives }}
-              </option>
-            </select>
-          </div>
-          <div class="flex justify-start space-x-5 items-center ml-12">
-            <label class="text-2xl font-semibold text-black">
-              Descriptions
-            </label>
-            <textarea
-              v-model="bio"
-              class="px-4 py-2 outline-none rounded-lg border-2 border-black"
-              cols="50"
-              placeholder="Descriptions"
-            ></textarea>
-          </div>
-          <div class="w-full flex justify-end">
-            <button
-              class="bg-green-500 text-white text-md font-semibold px-5 py-1 rounded-lg"
-            >
-              {{ artistsName ? "Update Artist" : "Add Product" }}
-            </button>
-          </div>
-        </form>
-      </div>
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M6 18 18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
+      <form
+        @submit.prevent="addProduct"
+        class="w-full bg-white rounded-md p-3 space-y-6"
+      >
+        <div class="flex justify-start space-x-5 items-center ml-12">
+          <label class="text-2xl font-semibold text-black">Artist Name </label>
+          <input
+            class="px-4 py-2 outline-none rounded-lg border-2 border-black"
+            type="text"
+            v-model="artistsName"
+            placeholder="Name..."
+          />
+        </div>
+        <div class="flex justify-start space-x-9 items-center ml-12">
+          <label class="text-2xl font-semibold text-black"> WorkingDay </label>
+          <select
+            v-model="WorkingDay"
+            class="px-4 py-2 outline-none rounded-lg border-2 border-black"
+          >
+            <option v-for="type in WorkingDayStatus" :key="type" :value="type">
+              {{ type }}
+            </option>
+          </select>
+        </div>
+        <div class="flex justify-start space-x-9 items-center ml-12">
+          <label class="text-2xl font-semibold text-black">
+            Working Time
+          </label>
+          <select
+            v-model="WorkingTime"
+            class="px-4 py-2 outline-none rounded-lg border-2 border-black"
+          >
+            <option v-for="type in WorkingTimeStatus" :key="type" :value="type">
+              {{ type }}
+            </option>
+          </select>
+        </div>
+        <div class="flex justify-start space-x-5 items-center ml-12">
+          <label class="text-2xl font-semibold text-black"> Image </label>
+          <input
+            type="file"
+            @change="handleFileChange"
+            class="px-4 py-2 outline-none rounded-lg border-2 border-black"
+          />
+        </div>
+        <div class="flex justify-start space-x-9 items-center ml-12">
+          <label class="text-2xl font-semibold text-black"> Status </label>
+          <select
+            v-model="isActive"
+            class="px-4 py-2 outline-none rounded-lg border-2 border-black"
+          >
+            <option v-for="actives in statuses" :key="actives">
+              {{ actives }}
+            </option>
+          </select>
+        </div>
+        <div class="flex justify-start space-x-5 items-center ml-12">
+          <label class="text-2xl font-semibold text-black">
+            Descriptions
+          </label>
+          <textarea
+            v-model="bio"
+            class="px-4 py-2 outline-none rounded-lg border-2 border-black"
+            cols="50"
+            placeholder="Descriptions"
+          ></textarea>
+        </div>
+        <div class="w-full flex justify-end">
+          <button
+            class="bg-green-500 text-white text-md font-semibold px-5 py-1 rounded-lg"
+          >
+            {{ artistsName ? "Update Artist" : "Add Product" }}
+          </button>
+        </div>
+      </form>
     </div>
   </div>
   <TransitionRoot appear :show="isOpen" as="template">
@@ -187,8 +166,8 @@ export default {
     DialogPanel,
     DialogTitle,
   },
-  props: ["id"],
-  setup() {
+  props: ["id", "datatedit"],
+  setup(props, { emit }) {
     const { addDocs, removeDoc, updateDocs } = useCollection("artists");
     const { uploadImage } = useStorage();
 
@@ -250,14 +229,15 @@ export default {
 
           image: imageURL,
         };
+        handleClose();
         setTimeout(() => {
           isOpen.value = true;
           setTimeout(() => {
             isOpen.value = false;
           }, 1000);
         }, 1000);
-        if (route.query.id) {
-          await updateDocs(route.query.id, productData);
+        if (props.datatedit) {
+          await updateDocs(props.datatedit?.id, productData);
         } else {
           await addDocs(productData);
         }
@@ -267,29 +247,22 @@ export default {
         WorkingDayStatus.value = null;
         WorkingTimeStatus.value = null;
         img.value = null;
-        // router.push({ name: "artist" });
       } catch (error) {
         console.error("Error performing product operation:", error);
       }
     };
-
-    console.log("Route Query:", route.query, document);
-
-    onMounted(async () => {
-      if (router.currentRoute.value.query.id) {
-        await fetchPostById(router.currentRoute.value.query.id);
-        if (document.value) {
-          const postData = document.value;
-          artistsName.value = postData.name;
-          bio.value = postData.bio;
-          isActive.value = postData.status;
-          WorkingDay.value = postData.workingday;
-          WorkingTime.value = postData.workingtime;
-          img.value = postData.image;
-        }
+    onMounted(() => {
+      if (props.datatedit) {
+        artistsName.value = props.datatedit.name;
+        bio.value = props.datatedit.bio;
+        isActive.value = props.datatedit.statuse;
+        WorkingDay.value = props.datatedit.workingday;
+        WorkingTime.value = props.datatedit.workingtime;
       }
     });
-
+    const handleClose = () => {
+      emit("close");
+    };
     return {
       artistsName,
       bio,
@@ -306,6 +279,7 @@ export default {
       closeModal,
       openModal,
       isOpen,
+      handleClose,
     };
   },
 };

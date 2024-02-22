@@ -117,25 +117,25 @@
             </li>
           </ul>
         </div>
-        <router-link to="/addartist">
-          <button
-            class="px-4 h-8 shadow rounded-lg bg-primary1 text-white flex items-center justify-center"
-          >
-            <span
-              ><svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="w-4 h-4 mr-2"
-                viewBox="0 0 32 32"
-              >
-                <path
-                  fill="currentColor"
-                  d="M16 2A14.173 14.173 0 0 0 2 16a14.173 14.173 0 0 0 14 14a14.173 14.173 0 0 0 14-14A14.173 14.173 0 0 0 16 2m8 15h-7v7h-2v-7H8v-2h7V8h2v7h7Z"
-                />
-                <path fill="none" d="M24 17h-7v7h-2v-7H8v-2h7V8h2v7h7z" /></svg
-            ></span>
-            add
-          </button>
-        </router-link>
+
+        <button
+          @click="isAddArtist"
+          class="px-4 h-8 shadow rounded-lg bg-primary1 text-white flex items-center justify-center"
+        >
+          <span
+            ><svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 mr-2"
+              viewBox="0 0 32 32"
+            >
+              <path
+                fill="currentColor"
+                d="M16 2A14.173 14.173 0 0 0 2 16a14.173 14.173 0 0 0 14 14a14.173 14.173 0 0 0 14-14A14.173 14.173 0 0 0 16 2m8 15h-7v7h-2v-7H8v-2h7V8h2v7h7Z"
+              />
+              <path fill="none" d="M24 17h-7v7h-2v-7H8v-2h7V8h2v7h7z" /></svg
+          ></span>
+          add
+        </button>
       </div>
     </div>
     <div
@@ -196,7 +196,7 @@
             </svg>
           </router-link>
           <button
-            @click="handleEdit(user.id)"
+            @click="handleAddEditData(user)"
             class="bg-active p-1 rounded bg-opacity-50"
           >
             <svg
@@ -360,10 +360,16 @@
       <!-- TW Elements is free under AGPL, with commercial license required for specific uses. See more details: https://tw-elements.com/license/ and contact us for queries at tailwind@mdbootstrap.com -->
     </div>
   </div>
+  <component
+    :is="currentCommponent"
+    @close="handleClose"
+    :datatedit="datatedit"
+  />
 </template>
 
 <script>
 import { useRouter } from "vue-router";
+import AddArtist from "./AddArtist.vue";
 import { getCollectionQuery } from "@/composible/getCollection";
 import { ref, onMounted, computed } from "vue";
 import { Dropdown, Ripple, initTE } from "tw-elements";
@@ -382,18 +388,26 @@ export default {
     Dialog,
     DialogPanel,
     DialogTitle,
+    AddArtist,
   },
   setup() {
     const dataitem = ref([]);
     const searchQuery = ref("");
     const sortBy = ref(null);
     const { addDocs, removeDoc, updateDocs } = useCollection("artists");
-
+    const currentCommponent = ref("");
     onMounted(async () => {
       await getData();
       initTE({ Dropdown, Ripple });
     });
-
+    const datatedit = ref(null);
+    const handleAddEditData = (item) => {
+      currentCommponent.value = "AddArtist";
+      datatedit.value = item;
+      console.log("====================================");
+      console.log(datatedit.value);
+      console.log("====================================");
+    };
     const getData = async () => {
       try {
         await getCollectionQuery(
@@ -472,6 +486,12 @@ export default {
         console.error("Error deleting product:", error);
       }
     };
+    const isAddArtist = () => {
+      currentCommponent.value = "AddArtist";
+    };
+    const handleClose = () => {
+      currentCommponent.value = "";
+    };
     return {
       productId,
       handleEdit,
@@ -483,6 +503,11 @@ export default {
       closeModal,
       openModal,
       deleteProduct,
+      currentCommponent,
+      isAddArtist,
+      handleClose,
+      handleAddEditData,
+      datatedit,
     };
   },
 };

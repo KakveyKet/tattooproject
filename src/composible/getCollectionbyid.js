@@ -4,7 +4,7 @@ import { ref } from "vue";
 
 const getDataById = (collectionName) => {
     const error = ref(null);
-    const document = ref(null); // Initialize as null instead of []
+    const document = ref(null);
 
     const fetchPostById = async (id) => {
         error.value = null;

@@ -1,5 +1,26 @@
 <template>
-  <div class="flex w-full bg-card h-screen items-center justify-center">
+  <div
+    class="flex w-full bg-card h-screen items-center justify-center relative"
+  >
+    <router-link
+      to="/artist"
+      class="w-10 h-10 bg-card shadow-xl rounded-full absolute top-2 left-2 flex items-center justify-center"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="w-6 h-6"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M15.75 19.5 8.25 12l7.5-7.5"
+        />
+      </svg>
+    </router-link>
     <div class="bg-white p-5 rounded-md w-1/2">
       <div v-if="product" class="w-[70%] space-y-2">
         <div class="w-full flex items-center justify-center space-x-4">
