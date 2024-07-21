@@ -226,7 +226,6 @@ export default {
           statuse: isActive.value,
           workingday: WorkingDay.value,
           workingtime: WorkingTime.value,
-
           image: imageURL,
         };
         handleClose();

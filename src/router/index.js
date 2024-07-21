@@ -10,7 +10,6 @@ import BookingVue from '@/views/Booking.vue';
 
 import HomeWebVue from '@/client/HomeWeb.vue';
 
-import UserTestVue from '@/client/UserTest.vue';
 import ServiceAndProductVue from '@/client/ServiceAndProduct.vue';
 import ContactUsVue from '@/client/ContactUs.vue';
 import AboutUs from '@/client/AboutUs.vue';
@@ -30,17 +29,12 @@ import BookingDetailsVue from '@/views/BookingDetails.vue';
 import PrintInvoiceVue from '@/views/PrintInvoice.vue';
 const routes = [
   {
-    path: '/',
-    name: 'usertest',
-    component: UserTestVue,
-  },
-  {
-    path: '/webclient',
+    path: '/home',
     name: 'home',
     component: HomeView,
     children: [
       {
-        path: '/homeweb',
+        path: '/',
         name: 'homeweb',
         component: HomeWebVue
       },

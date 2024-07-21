@@ -396,6 +396,15 @@ export default {
     const sortBy = ref(null);
     const { addDocs, removeDoc, updateDocs } = useCollection("artists");
     const currentCommponent = ref("");
+
+    const isAddArtist = () => {
+      currentCommponent.value = "AddArtist";
+    };
+    const handleClose = () => {
+      currentCommponent.value = "";
+    };
+
+    /// not
     onMounted(async () => {
       await getData();
       initTE({ Dropdown, Ripple });
@@ -463,13 +472,6 @@ export default {
 
     const router = useRouter();
 
-    const handleEdit = (id) => {
-      router.push({
-        name: "addartist",
-        params: { id: id },
-        query: { id: id },
-      });
-    };
     const productId = ref(null);
     const deleteProduct = async () => {
       try {
@@ -486,12 +488,7 @@ export default {
         console.error("Error deleting product:", error);
       }
     };
-    const isAddArtist = () => {
-      currentCommponent.value = "AddArtist";
-    };
-    const handleClose = () => {
-      currentCommponent.value = "";
-    };
+
     return {
       productId,
       handleEdit,

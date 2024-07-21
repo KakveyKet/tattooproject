@@ -17,7 +17,7 @@
       </h1>
     </div>
     <div class="lg:flex md:hidden xl:flex hidden items-center space-x-2 mr-4">
-      <router-link class="text-lg font-semibold text-white" to="/homeweb"
+      <router-link class="text-lg font-semibold text-white" to="/ "
         >Home</router-link
       >
       <div class="w-[2px] h-4 bg-white"></div>
@@ -238,7 +238,7 @@
             <router-link
               @click.prevent="handleOpenMenuMobile"
               class="text-xl font-semibold text-white"
-              to="/homeweb"
+              to="/"
               >Home</router-link
             >
             <router-link
